@@ -15,13 +15,13 @@ SQLAlchemy = { extras = ["asyncio"], version = "^1.4" }
 python-dotenv = "^0.21"
 
 [tool.poetry.group.dev.dependencies]
-testcontainers = "^3.7"
 alembic = "^1.8"
 isort = "^5.10"
 black = "^22.10"
 mypy = "^0.991"
 flake8 = "^6.0"
 Flake8-pyproject = "^1.2.0"
+types-SQLAlchemy = "^1.4"
 
 [build-system]
 requires = ["poetry-core"]
