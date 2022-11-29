@@ -1,0 +1,14 @@
+default:
+    @just --list
+
+run:
+	poetry run uvicorn \
+		lanjun.server.main:app \
+		--port 8080 \
+		--reload
+
+fmt:
+    poetry run black lanjun/ tests/ && poetry run isort lanjun/ tests/
+
+lint:
+	poetry run mypy --strict lanjun/ && poetry run flake8 lanjun/
