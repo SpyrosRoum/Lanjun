@@ -12,3 +12,12 @@ fmt:
 
 lint:
 	poetry run mypy --strict lanjun/ && poetry run flake8 lanjun/
+
+build:
+    docker build --tag=lanjun/app .
+
+up:
+    docker compose up api -d
+
+down:
+    docker compose down
