@@ -1,13 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Eagle+Lake&family=Nanum+Brush+Script&display=swap');
-
-
-
 .background {
     --sidebar-gap: -12rem;
 
     font-family: 'Eagle Lake', cursive;
     font-size: 3rem;
-    color: var(--text-color);
+    color: var(--main-color);
     background-color: black;
     position: fixed;
 
@@ -24,20 +20,44 @@
     transform: translateX(0);
 }
 
+.sidebar-top {
+    display: grid;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    font-size: 1.1rem;
+    color: var(--link-color);
+
+    text-align: center;
+}
+
+.logo {
+    display: grid;
+    position: relative;
+    z-index: 1000;
+    height: 10rem;
+    width: 100%;
+
+    background-image: url("/assets/logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+
 .background-img {
     display: grid;
     position: relative;
     z-index: -100;
     height: 100%;
     width: 30rem;
-    /* background-color: var(--main-color); */
     opacity: 0.3;
+
 
     background-image: url("https://www.pngall.com/wp-content/uploads/5/Great-Wall-Of-China-PNG-Images.png");
     background-image: url("https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/great-wall-of-china-vertical-delphimages-photo-creations.jpg");
     background-position: bottom;
     background-repeat: no-repeat;
-
 
     justify-content: center;
 }
@@ -47,7 +67,6 @@
 }
 
 .nav-bar:hover {
-    text-decoration: underline;
     opacity: 1;
 }
 
@@ -61,26 +80,39 @@
     left: 0;
     width: inherit;
     height: 100%;
-    /* transform: translateX(-10rem);
-    transition: all .2s ease-in; */
-    opacity: .7;
+    padding-bottom: 1rem;
+
+    opacity: .5;
     background: rgb(0, 0, 0);
     background: linear-gradient(0deg, rgba(0, 0, 0, .7) 40%, rgba(0, 212, 255, 0) 75%, rgba(9, 9, 121, 0) 100%);
-    /* pointer-events: none; */
+
 }
 
-.nav-bar>a {
-    color: inherit;
-    text-decoration: none;
-}
-
-
-a { 
+.nav-bar-link {
+    position: relative;
     pointer-events: auto;
 }
 
-.nav-bar > a:hover {
+.nav-bar-link:hover {
+    cursor: pointer;
     color: var(--link-color);
 }
 
-/* todo add gradient to bg image*/
+
+.nav-bar-link::before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    width: 100%;
+    height: .4rem;
+    background-color: var(--link-color);
+    bottom: 0;
+    right: 0;
+    transform: scaleX(0);
+    transition: transform 300ms linear;
+    transform-origin: bottom left;
+}
+
+.nav-bar-link:hover::before {
+    transform: scaleX(1);
+}

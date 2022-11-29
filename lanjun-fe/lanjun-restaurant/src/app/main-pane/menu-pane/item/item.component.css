@@ -1,0 +1,62 @@
+.item {
+    display: grid;
+    grid-template-columns: var(--img-width) 20rem;
+    gap: 1rem;
+}
+
+.item-img {
+    grid-row: 1/3;
+    height: var(--img-width);
+    width: var(--img-width);
+
+    border: .2rem solid black;
+    border-radius: 1rem;
+    transition: transform ease-in .2s;
+}
+
+.item:hover>.item-img {
+    transform: scale(1.1);
+}
+
+.item-name {
+    font-family: 'Eagle Lake', cursive;
+    grid-row: 1;
+    font-size: 1.5rem;
+}
+
+.item-description {
+    font-style: italic;
+    grid-row: 2;
+    opacity: 0.9;
+    align-self: center;
+}
+
+.item-price {
+    grid-row: 1;
+    font-size: 2rem;
+    align-self: center;
+    justify-self: center;
+}
+
+.item-price::after {
+    content: '€';
+}
+
+.item-add-to-cart {
+    grid-row: 2;
+}
+
+.background-img {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-image: url("https://images.squarespace-cdn.com/content/v1/596fd9989f7456d6bbc11ad1/1582761720450-7BH9EFLN06ZXJ0OX1JLO/Formosa2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: 8rem;
+    opacity: 0.7;
+    height: 100%;
+    width: 100%;
+    z-index: -100;
+}

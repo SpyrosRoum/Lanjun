@@ -1,0 +1,7 @@
+<div [ngSwitch]="panel">
+    <div *ngSwitchCase="'home'" class="main-panel home-panel"></div>
+    <app-menu-pane *ngSwitchCase="'menu'" class="main-panel"></app-menu-pane>
+    <app-delivery-pane *ngSwitchCase="'delivery'" class="main-panel"></app-delivery-pane>
+    <app-reservation-pane *ngSwitchCase="'reservation'" class="main-panel-2"></app-reservation-pane>
+    <div *ngSwitchDefault>Nothing</div>
+</div>

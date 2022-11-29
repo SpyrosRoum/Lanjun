@@ -1,0 +1,14 @@
+<div class="reservation">
+    <div class="reservation-title">Reserve a Table</div>
+    <form action="POST" class="reservation-form">
+        <select name="people" id="people" class="reservation-people">
+            <option value="1">1 person</option>
+            <option *ngFor="let item of [].constructor(8); let i = index" value="i">{{i+2}} people</option>
+            <option value="1">10+ people</option>
+        </select>
+
+        <input type="date" id="date" name="date" class="reservation-date">
+
+        <input type="button" value="Reserve" class="reservation-submit">
+    </form>
+</div>

@@ -1,0 +1,5 @@
+<div class="container">
+    <div class="button remove" [ngClass]="{'inactive': count===0}" (click)="remove()">-</div>
+    <div class="quantity">{{count}}</div>
+    <div class="button add" [ngClass]="{'inactive': count>8 || delivery}" (click)="add()">+</div>
+</div>

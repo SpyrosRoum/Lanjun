@@ -1,0 +1,31 @@
+<div class="menu-pane">
+    <div *ngIf="cartItems.length>0" class="category">
+        <div class="category-name">Your order!</div>
+        <app-item *ngFor="let cartitem of cartItems" class="item" [item]="cartitem.item" [count]="cartitem.count"
+            [delivery]="true"></app-item>
+        <div class="summary">
+            <div class="total-price">The total is: <span class="price">{{sum}}</span></div>
+            <!-- <div class="total-items">No. of Items: <span class="items">{{cartItems.length}}</span></div> -->
+            <div class="choose-reservation">
+                <div class="choose-reservation-switch-block">
+                    <span class="choose-reservation-text">Reservation:</span>
+                    <label class="choose-reservation-switch">
+                        <input type="checkbox" (click)="toggleReservation()">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div *ngIf="reservation" class="choose-reservation-text">Yes, I'd like to reserve a table</div>
+                <div *ngIf="!reservation" class="choose-reservation-text">No, I'd just like a delivery</div>
+            </div>
+
+            <app-reservation-pane *ngIf="reservation"></app-reservation-pane>
+            <div class="button-complete" (click)="buy()">Complete your order</div>
+        </div>
+    </div>
+    <div *ngIf="cartItems.length===0" class="category ">
+        <div class="category-name">No Items</div>
+        <div class="button-menu" (click)="swapper('menu')"> Go to our menu!</div>
+    </div>
+</div>
+
+<div class="background-img"></div>

@@ -1,5 +1,12 @@
-<div class="order">
+<div *ngIf="count>0" (click)="swapper('delivery')" class="order">
+    <div class="overlay cart">
+        <div class="text">Cart</div>
+        <div class="item-count">{{count}}</div>
+    </div>
+</div>
+
+<div *ngIf="count===0" (click)="swapper('menu')" class="order">
     <div class="overlay">
-        <div class="text" onclick="window.open('https://en.wikipedia.org/wiki/Chinese_dragon');">Order!</div>
+        <div class="text">Menu!</div>
     </div>
 </div>
