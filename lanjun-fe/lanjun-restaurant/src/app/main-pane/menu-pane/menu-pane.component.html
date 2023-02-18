@@ -1,0 +1,8 @@
+<div class="menu-pane">
+    <div class="category" *ngFor="let category of categories">
+        <div class="category-name">{{category.name}}</div>
+        <app-item *ngFor="let item of category.items" class="item" [item]="item" [count]="getCountOfItem(item.id)"></app-item>
+    </div>
+</div>
+<div class="background-img">
+</div>

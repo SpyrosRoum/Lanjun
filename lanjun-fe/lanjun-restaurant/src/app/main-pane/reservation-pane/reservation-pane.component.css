@@ -1,0 +1,72 @@
+.reservation {
+    display: grid;
+    /* justify-content: center; */
+    align-content: baseline;
+    /* width: calc(100% - 18rem); */
+}
+
+.reservation-title {
+    font-family: 'Eagle Lake', cursive;
+    position: relative;
+    font-size: 3rem;
+}
+
+.reservation-title::before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    width: 100%;
+    height: .4rem;
+    background-color: var(--link-color);
+    bottom: 0;
+    right: 0;
+}
+
+.reservation-title::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    width: 100%;
+    height: .4rem;
+    background-color: var(--main-color);
+    bottom: 0;
+    right: 0;
+    transform: scaleX(0);
+    transition: transform 300ms linear;
+    transform-origin: bottom left;
+}
+
+.reservation:hover>.reservation-title::after {
+    transform: scaleX(1);
+}
+
+.reservation-form {
+    display: grid;
+    grid-auto-flow: column;
+    margin-block: 1rem;
+
+    width: 80%;
+    justify-self: center;
+}
+
+.reservation-people {
+    background: var(--main-color);
+    font-size: 1.3rem;
+    border-bottom-left-radius: 10rem;
+    border-top-left-radius: 10rem;
+    padding: .5rem;
+}
+
+.reservation-date {
+    font-size: 1.3rem;
+}
+
+.reservation-submit {
+    font-size: 1.3rem;
+    border-bottom-right-radius: 10rem;
+    border-top-right-radius: 10rem;
+}
+
+.reservation-submit:hover {
+    cursor: pointer;
+}

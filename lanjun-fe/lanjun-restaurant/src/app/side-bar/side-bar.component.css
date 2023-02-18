@@ -1,0 +1,118 @@
+.background {
+    --sidebar-gap: -12rem;
+
+    font-family: 'Eagle Lake', cursive;
+    font-size: 3rem;
+    color: var(--main-color);
+    background-color: black;
+    position: fixed;
+
+    height: 100%;
+    width: 30rem;
+
+    border-right: .5rem var(--text-color) solid;
+
+    transform: translateX(var(--sidebar-gap));
+    transition: all .2s ease-in;
+}
+
+.background:hover {
+    transform: translateX(0);
+}
+
+.sidebar-top {
+    display: grid;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    font-size: 1.1rem;
+    color: var(--link-color);
+
+    text-align: center;
+}
+
+.logo {
+    display: grid;
+    position: relative;
+    z-index: 1000;
+    height: 10rem;
+    width: 100%;
+
+    background-image: url("/assets/logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+
+.background-img {
+    display: grid;
+    position: relative;
+    z-index: -100;
+    height: 100%;
+    width: 30rem;
+    opacity: 0.3;
+
+
+    background-image: url("https://www.pngall.com/wp-content/uploads/5/Great-Wall-Of-China-PNG-Images.png");
+    background-image: url("https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/great-wall-of-china-vertical-delphimages-photo-creations.jpg");
+    background-position: bottom;
+    background-repeat: no-repeat;
+
+    justify-content: center;
+}
+
+.background-img:hover {
+    opacity: .5;
+}
+
+.nav-bar:hover {
+    opacity: 1;
+}
+
+.nav-bar {
+    display: grid;
+    justify-items: center;
+    align-content: end;
+    z-index: 10;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: inherit;
+    height: 100%;
+    padding-bottom: 1rem;
+
+    opacity: .5;
+    background: rgb(0, 0, 0);
+    background: linear-gradient(0deg, rgba(0, 0, 0, .7) 40%, rgba(0, 212, 255, 0) 75%, rgba(9, 9, 121, 0) 100%);
+
+}
+
+.nav-bar-link {
+    position: relative;
+    pointer-events: auto;
+}
+
+.nav-bar-link:hover {
+    cursor: pointer;
+    color: var(--link-color);
+}
+
+
+.nav-bar-link::before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    width: 100%;
+    height: .4rem;
+    background-color: var(--link-color);
+    bottom: 0;
+    right: 0;
+    transform: scaleX(0);
+    transition: transform 300ms linear;
+    transform-origin: bottom left;
+}
+
+.nav-bar-link:hover::before {
+    transform: scaleX(1);
+}
