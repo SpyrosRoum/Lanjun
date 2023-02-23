@@ -7,8 +7,59 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+uvicorn = { extras = ["standard"], version = "^0.20" }
+fastapi = "^0.88"
+pydantic = "^1.10"
+asyncpg = "^0.27"
+SQLAlchemy = { extras = ["asyncio"], version = "^1.4" }
+python-dotenv = "^0.21"
 
+[tool.poetry.group.dev.dependencies]
+alembic = "^1.8"
+isort = "^5.10"
+black = "^22.10"
+mypy = "^0.991"
+flake8 = "^6.0"
+Flake8-pyproject = "^1.2.0"
+types-SQLAlchemy = "^1.4"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
+[tool.isort]
+line_length = 99
+profile = "black"
+skip_glob = ".venv,venv"
+float_to_top = true
+
+[tool.black]
+line-length = 99
+target-version = ["py310"]
+exclude = '''
+/(
+    \.git|venv|.venv
+)/
+'''
+
+[tool.mypy]
+exclude = ".?venv"
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_any_unimported = true
+disallow_incomplete_defs = true
+disallow_subclassing_any = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unused_configs = true
+warn_unused_ignores = true
+warn_unreachable = true
+
+[tool.flake8]
+max-line-length = 99
+extend-ignore = "E203"

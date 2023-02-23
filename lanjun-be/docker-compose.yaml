@@ -1,0 +1,49 @@
+version: "3.8"
+services:
+  api:
+    build:
+      context: .
+      target: prod
+    ports:
+      - "8080:8080"
+    command:
+      - "uvicorn"
+      - "lanjun.server.main:app"
+      - "--host"
+      - "0.0.0.0"
+      - "--port"
+      - "8080"
+      - "--reload"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/lanjun
+      - JWT_SECRET=pass
+      - DEBUG=1
+      - LOGGING_LEVEL=DEBUG
+    restart: on-failure
+    volumes:
+      - .:/home/worker/app
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14.4
+    container_name: lanjun_db
+    ports:
+      - "5440:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=lanjun
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready",
+          "-U",
+          "postgres",
+          "-h",
+          "/var/run/postgresql",
+        ]
+      interval: 3s
+      timeout: 5s
+      retries: 10
