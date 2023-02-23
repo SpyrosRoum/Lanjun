@@ -2,16 +2,16 @@ default:
     @just --list
 
 run:
-	poetry run uvicorn \
-		lanjun.server.main:app \
-		--port 8080 \
-		--reload
+    poetry run uvicorn \
+        lanjun.server.main:app \
+        --port 8080 \
+        --reload
 
 fmt:
     poetry run black lanjun/ tests/ && poetry run isort lanjun/ tests/
 
 lint:
-	poetry run mypy --strict lanjun/ && poetry run flake8 lanjun/
+    poetry run mypy --strict lanjun/ && poetry run flake8 lanjun/
 
 build:
     docker build --tag=lanjun/app .
@@ -21,3 +21,21 @@ up:
 
 down:
     docker compose down
+
+integration_test_prepare:
+    docker compose -f ./tests/integration/test-docker-compose.yaml up --build -d
+    until [ "$(docker inspect --format='{{{{json .State.Health.Status}}' test_db)" = '"healthy"' ]; do \
+      echo "Waiting for test_db"; \
+      sleep 1; \
+    done
+
+integration_test_teardown:
+    docker compose -f ./tests/integration/test-docker-compose.yaml down
+
+integration_test_run:
+    DATABASE_URL="postgresql+asyncpg://postgres:postgres@localhost:5441/lanjun" pytest -vv tests/integration/ --test-alembic
+
+integration_test:
+    @just integration_test_prepare
+    -@just integration_test_run  # `-` to ignore errors
+    @just integration_test_teardown
