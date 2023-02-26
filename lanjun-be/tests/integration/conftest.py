@@ -10,6 +10,7 @@ from lanjun import entities  # noqa: F401
 from lanjun.common import settings
 from lanjun.database import get_or_create_engine
 
+
 @pytest.fixture(scope="package", autouse=True)
 def migrate_db() -> None:
     settings.DATABASE_URL = "postgresql+asyncpg://postgres:postgres@localhost:5441/lanjun"
@@ -19,7 +20,7 @@ def migrate_db() -> None:
     command.upgrade(config, "head")
 
 
-@pytest.fixture(scope='function', autouse=True)
+@pytest.fixture(scope="function", autouse=True)
 async def truncate_all() -> AsyncGenerator[None, None]:
     try:
         yield

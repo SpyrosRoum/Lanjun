@@ -1,16 +1,16 @@
 from datetime import datetime
 from decimal import Decimal
-from uuid import UUID, uuid4
 from typing import TYPE_CHECKING
+from uuid import UUID, uuid4
 
 from sqlmodel import Field, Relationship, SQLModel
 
 from lanjun.entities.links import OrderItemLink
 
 if TYPE_CHECKING:
-    from lanjun.entities.user import User
     from lanjun.entities.item import Item
     from lanjun.entities.reservation import Reservation
+    from lanjun.entities.user import User
 
 
 class Order(SQLModel, table=True):

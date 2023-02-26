@@ -3,7 +3,7 @@ from uuid import UUID
 
 from pydantic import BaseModel
 
-from lanjun.entities import Item
+from lanjun.entities.item import Item
 
 
 class ItemModel(BaseModel):

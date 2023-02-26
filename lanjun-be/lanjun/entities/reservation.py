@@ -1,15 +1,15 @@
 from datetime import datetime
-from uuid import UUID, uuid4
 from typing import TYPE_CHECKING, Optional
+from uuid import UUID, uuid4
 
 from sqlmodel import Field, Relationship, SQLModel
 
 from lanjun.entities.links import ReservationTableLink
 
 if TYPE_CHECKING:
-    from lanjun.entities.user import User
     from lanjun.entities.order import Order
     from lanjun.entities.table import Table
+    from lanjun.entities.user import User
 
 
 class Reservation(SQLModel, table=True):
