@@ -1,4 +1,4 @@
-from lanjun.http_models.responses import CategoryItems, ItemResponse, Category
+from lanjun.http_models.responses import Category, CategoryItems, ItemResponse
 from lanjun.repos.item import ItemRepo
 
 
@@ -8,7 +8,8 @@ async def get_items_per_category() -> CategoryItems:
 
     for category in categories:
         items = await ItemRepo.get_items_in_category(category)
-        items = map(ItemResponse.from_model, items)
-        result_categories.append(Category(name=category, items=items))
+        result_categories.append(
+            Category(name=category, items=list(map(ItemResponse.from_model, items)))
+        )
 
     return CategoryItems(categories=result_categories)

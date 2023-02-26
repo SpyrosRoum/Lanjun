@@ -1,6 +1,6 @@
 import json
 from contextlib import asynccontextmanager
-from typing import Any, AsyncGenerator, Dict
+from typing import Any, AsyncGenerator, cast
 
 import pydantic.json
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker
 
 from lanjun.common.settings import DATABASE_URL
 
-_db_engines: Dict[str, AsyncEngine] = {}
+_db_engines: dict[str, AsyncEngine] = {}
 
 
 def _pydantic_json_serializer(*args: Any, **kwargs: Any) -> str:
@@ -39,7 +39,7 @@ def get_session(url: str = DATABASE_URL, echo: bool = False) -> AsyncSession:
 
     async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=True)
 
-    return async_session()
+    return cast(AsyncSession, async_session())
 
 
 @asynccontextmanager

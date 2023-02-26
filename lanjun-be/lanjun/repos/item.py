@@ -5,9 +5,9 @@ from uuid import UUID
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 
-from lanjun.domain.item import ItemModel
-from lanjun.entities import Item
 from lanjun.database import db_session
+from lanjun.domain.item import ItemModel
+from lanjun.entities.item import Item
 
 logger = logging.getLogger(__name__)
 
@@ -20,11 +20,8 @@ class ItemRepo:
             session.add(entity)
             try:
                 await session.commit()
-            except IntegrityError as err:
-                breakpoint()
-                logger.warning(
-                    f'Duplicate record found for Item `{item.id}`'
-                )
+            except IntegrityError:
+                logger.warning(f"Duplicate record found for Item `{item.id}`")
 
     @classmethod
     async def get(cls, id_: UUID) -> Optional[ItemModel]:

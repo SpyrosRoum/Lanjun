@@ -13,13 +13,13 @@ class TestItemRepo:
     @pytest.fixture(scope="function")
     def get_item(self) -> Callable[[], ItemModel]:
         def _wrapper(
-                id_: Optional[UUID] = None,
-                name: Optional[str] = None,
-                description: str = "item description",
-                price: Decimal = Decimal("3.14"),
-                count: int = 5,
-                category: str = "category A",
-                image_url: str = "https://example.com",
+            id_: Optional[UUID] = None,
+            name: Optional[str] = None,
+            description: str = "item description",
+            price: Decimal = Decimal("3.14"),
+            count: int = 5,
+            category: str = "category A",
+            image_url: str = "https://example.com",
         ) -> ItemModel:
             return ItemModel(
                 id=id_ or uuid4(),
@@ -28,7 +28,7 @@ class TestItemRepo:
                 price=price,
                 count=count,
                 category=category,
-                image_url=image_url
+                image_url=image_url,
             )
 
         return _wrapper

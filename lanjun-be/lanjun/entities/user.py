@@ -1,8 +1,8 @@
-from typing import Optional, TYPE_CHECKING
 from enum import Enum
+from typing import TYPE_CHECKING, Optional
 from uuid import UUID, uuid4
-from sqlalchemy import Column
 
+from sqlalchemy import Column
 from sqlmodel import Field, Relationship, SQLModel
 
 from lanjun.common.sqlmodel_fields import EnumField

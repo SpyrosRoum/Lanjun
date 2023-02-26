@@ -1,9 +1,9 @@
-from uuid import UUID, uuid4
 from typing import TYPE_CHECKING
+from uuid import UUID, uuid4
 
-from sqlmodel import Field, SQLModel, Relationship
+from sqlmodel import Field, Relationship, SQLModel
 
-from lanjun.entities.reservation import ReservationTableLink
+from lanjun.entities.links import ReservationTableLink
 
 if TYPE_CHECKING:
     from lanjun.entities.reservation import Reservation
