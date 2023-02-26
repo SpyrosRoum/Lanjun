@@ -31,4 +31,4 @@ class User(SQLModel, table=True):
     type: UserType = Field(sa_column=Column(EnumField(UserType)))
 
     orders: list["Order"] = Relationship(back_populates="user")
-    reservation: "Reservation" = Relationship(back_populates="user")
+    reservations: list["Reservation"] = Relationship(back_populates="user")

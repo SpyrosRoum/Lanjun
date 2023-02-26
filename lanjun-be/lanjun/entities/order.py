@@ -10,6 +10,7 @@ from lanjun.entities.links import OrderItemLink
 if TYPE_CHECKING:
     from lanjun.entities.user import User
     from lanjun.entities.item import Item
+    from lanjun.entities.reservation import Reservation
 
 
 class Order(SQLModel, table=True):
@@ -22,4 +23,5 @@ class Order(SQLModel, table=True):
     created_at: datetime
 
     user: "User" = Relationship(back_populates="orders")
+    reservation: "Reservation" = Relationship(back_populates="order")
     items: list["Item"] = Relationship(back_populates="orders", link_model=OrderItemLink)
