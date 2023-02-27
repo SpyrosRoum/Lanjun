@@ -1,9 +1,11 @@
 import os
+from asyncio import AbstractEventLoop
 from collections.abc import AsyncGenerator
 
 import pytest
 from alembic import command
 from alembic.config import Config
+from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncEngine
 from sqlmodel import SQLModel
 
@@ -11,6 +13,7 @@ from lanjun import entities  # noqa: F401
 from lanjun import database
 from lanjun.common import settings
 from lanjun.database import get_or_create_engine
+from lanjun.server.main import app
 
 
 @pytest.fixture(scope="package", autouse=True)
@@ -45,3 +48,9 @@ async def test_engine(event_loop) -> AsyncEngine:
     database._db_engines = {}
 
     return get_or_create_engine()
+
+
+@pytest.fixture(scope="function")
+async def test_client(event_loop: AbstractEventLoop) -> AsyncGenerator[AsyncClient, None]:
+    async with AsyncClient(app=app, base_url="http://test") as client:
+        yield client
