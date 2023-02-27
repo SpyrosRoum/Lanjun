@@ -21,3 +21,7 @@ class UserModel(BaseModel):
     @classmethod
     def from_entity(cls, entity: User) -> "UserModel":
         return cls(**entity.dict())
+
+    @property
+    def is_admin(self) -> bool:
+        return self.type == UserType.ADMIN

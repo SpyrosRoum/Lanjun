@@ -47,3 +47,16 @@ class UserRepo:
                 raise UserExists() from exc
             else:
                 return user_id
+
+    @classmethod
+    async def get_from_email(cls, email: str) -> Optional[UserModel]:
+        query = select(User).where(User.email == email)
+
+        async with db_session() as session:
+            res = await session.execute(query)
+            entity: Optional[User] = res.scalar_one_or_none()
+
+            if entity is None:
+                return None
+
+            return UserModel.from_entity(entity)

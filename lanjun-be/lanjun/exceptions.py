@@ -19,6 +19,12 @@ class UserExists(AppException):
         super().__init__(message)
 
 
+class InvalidCredentials(AuthorizationException):
+    def __init__(self, message: Optional[str] = None) -> None:
+        message = message or "Invalid email or password"
+        super().__init__(message)
+
+
 class InvalidJwt(AuthorizationException):
     def __init__(self, message: Optional[str] = None) -> None:
         message = message or "Could not validate credentials"

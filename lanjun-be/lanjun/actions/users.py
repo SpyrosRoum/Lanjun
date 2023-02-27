@@ -1,8 +1,10 @@
+from typing import Optional
 from uuid import UUID
 
 import bcrypt
 
-from lanjun.http_models.requests import CreateUser
+from lanjun.domain.user import UserModel
+from lanjun.http_models.requests import AuthUser, CreateUser
 from lanjun.repos.user import UserRepo
 
 
@@ -12,7 +14,24 @@ def _hash_password(pwd: str) -> bytes:
     return bcrypt.hashpw(pw, salt)
 
 
+def _check_password(pwd: str, hashed_pwd: str) -> bool:
+    pwd_bytes = bytes(pwd, "utf-8")
+    hashed_pwd_bytes = bytes(hashed_pwd, "utf-8")
+    return bcrypt.checkpw(pwd_bytes, hashed_pwd_bytes)
+
+
 async def create_user(user: CreateUser) -> UUID:
     hashed_pwd = _hash_password(user.password)
     user_id = await UserRepo.create_new_user(user, hashed_pwd)
     return user_id
+
+
+async def login_user(user_auth: AuthUser) -> Optional[UserModel]:
+    user = await UserRepo.get_from_email(user_auth.email.lower())
+    if user is None:
+        return None
+
+    if not _check_password(user_auth.password, user.password):
+        return None
+
+    return user

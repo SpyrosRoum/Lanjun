@@ -1,6 +1,7 @@
 from typing import Optional
 
-from pydantic import BaseModel, EmailStr
+from email_validator import validate_email
+from pydantic import BaseModel, EmailStr, validator
 
 
 class CreateUser(BaseModel):
@@ -13,3 +14,16 @@ class CreateUser(BaseModel):
     bell: Optional[str]
 
     phone: str
+
+    @validator("email")
+    def valid_email(cls, email: str) -> str:  # noqa
+        return validate_email(email).email.lower()  # type: ignore
+
+
+class AuthUser(BaseModel):
+    email: EmailStr
+    password: str
+
+    @validator("email")
+    def valid_email(cls, email: str) -> str:  # noqa
+        return validate_email(email).email.lower()  # type: ignore

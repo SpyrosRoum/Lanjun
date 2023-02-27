@@ -1,8 +1,23 @@
+from datetime import datetime, timedelta
+
 from fastapi import Header
 from jose import JWTError, jwt
 
 from lanjun.common.settings import JWT_SECRET
+from lanjun.domain.user import UserModel
 from lanjun.exceptions import InvalidJwt
+
+
+def generate_jwt(user: UserModel) -> str:
+    jwt_data = {
+        "sub": str(user.id),
+        # A month. This is _very_ bad,
+        # ideally we want use refresh tokens, but we want to keep it simple
+        "exp": datetime.utcnow() + timedelta(hours=720),
+        "is_admin": user.is_admin,
+    }
+
+    return jwt.encode(jwt_data, JWT_SECRET, algorithm="HS256")
 
 
 def get_user_id(authorization: str = Header(..., regex="Bearer .*")) -> str:

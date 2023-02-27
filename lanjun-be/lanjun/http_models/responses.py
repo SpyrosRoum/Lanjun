@@ -30,3 +30,7 @@ class CategoryItems(BaseModel):
 
 class UserCreated(BaseModel):
     id: UUID
+
+
+class LoginToken(BaseModel):
+    token: str
