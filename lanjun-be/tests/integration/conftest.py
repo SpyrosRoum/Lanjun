@@ -4,9 +4,11 @@ from collections.abc import AsyncGenerator
 import pytest
 from alembic import command
 from alembic.config import Config
+from sqlalchemy.ext.asyncio import AsyncEngine
 from sqlmodel import SQLModel
 
 from lanjun import entities  # noqa: F401
+from lanjun import database
 from lanjun.common import settings
 from lanjun.database import get_or_create_engine
 
@@ -33,3 +35,13 @@ async def truncate_all() -> AsyncGenerator[None, None]:
                 await con.execute(table.delete())
 
             await trans.commit()
+
+
+@pytest.fixture(scope="function", autouse=True)
+async def test_engine(event_loop) -> AsyncEngine:
+    # We need to force a new engine for every test,
+    # otherwise the engine will try to use the event_loop that existed when it got created
+    # but event_loops are function scoped
+    database._db_engines = {}
+
+    return get_or_create_engine()
