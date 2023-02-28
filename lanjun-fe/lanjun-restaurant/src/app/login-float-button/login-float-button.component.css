@@ -40,3 +40,93 @@
     transform: translate(-50%, -50%);
     text-align: center;
 }
+
+.login-pop-up {
+    display: grid;
+    position: fixed;
+    bottom: 11rem;
+    right: 1rem;
+    float: right;
+
+    background: var(--secondary-color);
+
+    border-radius: 5%;
+    outline: black .1rem solid;
+
+    font-family: 'Eagle Lake', cursive;
+
+    justify-items: center;
+
+    animation: pop 500ms forwards;
+}
+
+@keyframes pop {
+    0% {
+        transform: translateY(2rem);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+.login-section {
+    display: grid;
+    margin: 1rem;
+    align-items: center;
+    color: var(--text-color);
+}
+
+.login-section>form {
+    display: grid;
+    gap: .5rem;
+    grid-template-columns: 12rem 11rem;
+}
+
+.login-section:hover {
+    color: black;
+    font-weight: bold;
+}
+
+.login-section:hover>.login-title {
+    border-bottom: black solid .2rem;
+    color: black;
+}
+
+.login-title {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-block: .5rem;
+    border-bottom: var(--text-color) solid .2rem;
+}
+
+.login-section:last-of-type {
+    margin-bottom: 2rem;
+}
+
+.button-complete {
+    bottom: 0;
+    width: auto;
+    left: 53%;
+    align-self: center;
+    font-size: 1.5rem;
+
+    background-color: var(--main-color);
+    color: var(--secondary-color);
+    border: .1rem solid var(--main-color);
+    padding-inline: .5rem;
+    border-radius: 10rem;
+
+    transition: all .2s ease-in;
+    grid-column: 1/3;
+}
+
+
+.button-complete:hover {
+    cursor: pointer;
+
+    background-color: var(--secondary-color);
+    color: var(--main-color);
+    border-color: var(--main-color);
+}

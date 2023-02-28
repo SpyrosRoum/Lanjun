@@ -4,5 +4,4 @@ export class Item {
     image!: string;
     description!: string;
     price!: number;
-    
 }

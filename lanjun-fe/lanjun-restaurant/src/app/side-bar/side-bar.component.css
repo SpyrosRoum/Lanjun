@@ -42,7 +42,6 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-
 }
 
 .background-img {
@@ -58,6 +57,7 @@
     background-image: url("https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/great-wall-of-china-vertical-delphimages-photo-creations.jpg");
     background-position: bottom;
     background-repeat: no-repeat;
+    background-size: cover;
 
     justify-content: center;
 }

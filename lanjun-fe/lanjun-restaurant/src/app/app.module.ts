@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainPaneComponent } from './main-pane/main-pane.component';
 import { OrderFloatButtonComponent } from './order-float-button/order-float-button.component';
@@ -12,6 +10,9 @@ import { AddToCartComponent } from './main-pane/menu-pane/add-to-cart/add-to-car
 import { DeliveryPaneComponent } from './main-pane/delivery-pane/delivery-pane.component';
 import { ItemComponent } from './main-pane/menu-pane/item/item.component';
 import { ReservationPaneComponent } from './main-pane/reservation-pane/reservation-pane.component';
+import { AboutPaneComponent } from './main-pane/about-pane/about-pane.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,11 +25,13 @@ import { ReservationPaneComponent } from './main-pane/reservation-pane/reservati
     AddToCartComponent,
     DeliveryPaneComponent,
     ItemComponent,
-    ReservationPaneComponent
+    ReservationPaneComponent,
+    AboutPaneComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

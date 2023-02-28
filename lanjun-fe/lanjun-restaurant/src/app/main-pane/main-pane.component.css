@@ -1,5 +1,4 @@
-.home-panel {    
-    background-image: url("https://images.squarespace-cdn.com/content/v1/596fd9989f7456d6bbc11ad1/1582582093771-DK3PS4246AMFWRULJHV8/The+Formosa+Cafe+3.jpg?format=2500w");
+.home-panel {
     background-image: url("https://images.squarespace-cdn.com/content/v1/596fd9989f7456d6bbc11ad1/1582582081228-P0QCXXEM7P606OE2XIBO/The+Formosa+Cafe+1.jpg?format=2500w");
     background-repeat: no-repeat;
     background-size: cover;
@@ -18,7 +17,7 @@
     background-position-x: 8rem;
     height: 100%;
     width: 100%;
-    
+
     z-index: -1;
 }
 
@@ -29,11 +28,11 @@
     top: 0;
     height: 100%;
     width: 100%;
-    
+
     z-index: -1;
 }
 
-.main-panel-2 {
+.main-panel-center {
     display: grid;
     justify-content: center;
     position: fixed;
@@ -42,4 +41,10 @@
     width: 100%;
     margin-left: 12rem;
     z-index: -1;
+}
+
+.reservation{
+    background:  url(https://images.squarespace-cdn.com/content/v1/596fd9989f7456d6bbc11ad1/1582582081228-P0QCXXEM7P606OE2XIBO/The+Formosa+Cafe+1.jpg?format=2500w);
+    background-position-x: 40%;
+    background-size: cover;
 }

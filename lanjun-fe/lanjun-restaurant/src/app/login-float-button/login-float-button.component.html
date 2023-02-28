@@ -1,5 +1,43 @@
-<div class="order">
+<div class="order" (click)="toggleDiv()">
     <div class="overlay">
         <div class="text">Login!</div>
     </div>
+</div>
+
+<div *ngIf="!logged&&toggle" id="login-pop-up" class="login-pop-up">
+    <div class="login-section">
+        <div class="login-title">Login</div>
+        <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="" ngModel>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" value="" ngModel>
+            <input class="button-complete" type="submit" value="Log in!">
+        </form>
+    </div>
+
+    <div class="login-section">
+        <div class="login-title">Sign Up</div>
+        <form #signupForm="ngForm" (ngSubmit)="signup(signupForm)">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="" ngModel>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" value="" ngModel>
+            <label for="c_password">Confirm: </label>
+            <input type="c_password" id="c_password" name="c_password" value="" ngModel>
+            <label for="phone">Phone: </label>
+            <input type="phone" id="phone" name="phone" value="" ngModel>
+            <label for="address">(Optional) Address: </label>
+            <input type="address" id="address" name="address" value="" ngModel>
+            <label for="floor">(Optional) Floor: </label>
+            <input type="floor" id="floor" name="floor" value="" ngModel>
+            <label for="bell">(Optional) Bell: </label>
+            <input type="bell" id="bell" name="bell" value="" ngModel>
+            <input class="button-complete" type="submit" value="Sign up!">
+        </form>
+    </div>
+</div>
+
+<div *ngIf="logged&&toggle" id="login-pop-up" class="login-pop-up">
+    
 </div>

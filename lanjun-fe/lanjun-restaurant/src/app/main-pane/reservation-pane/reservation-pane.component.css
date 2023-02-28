@@ -2,7 +2,7 @@
     display: grid;
     /* justify-content: center; */
     align-content: baseline;
-    /* width: calc(100% - 18rem); */
+    min-width: 30rem;
 }
 
 .reservation-title {

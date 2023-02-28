@@ -9,7 +9,7 @@ export class SwapperService {
   static panelSubject: Subject<string> = new Subject();
 
   constructor() {
-    this.panel = 'reservation';
+    this.panel = 'home';
   }
 
   getPanel(): string {
