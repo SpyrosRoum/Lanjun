@@ -1,4 +1,3 @@
-from enum import Enum
 from typing import TYPE_CHECKING, Optional
 from uuid import UUID, uuid4
 
@@ -6,15 +5,11 @@ from sqlalchemy import Column
 from sqlmodel import Field, Relationship, SQLModel
 
 from lanjun.common.sqlmodel_fields import EnumField
+from lanjun.domain.enums import UserType
 
 if TYPE_CHECKING:
     from lanjun.entities.order import Order
     from lanjun.entities.reservation import Reservation
-
-
-class UserType(Enum):
-    NORMAL = "normal"
-    ADMIN = "admin"
 
 
 class User(SQLModel, table=True):

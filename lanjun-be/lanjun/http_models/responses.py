@@ -26,3 +26,11 @@ class Category(BaseModel):
 
 class CategoryItems(BaseModel):
     categories: list[Category]
+
+
+class UserCreated(BaseModel):
+    id: UUID
+
+
+class LoginToken(BaseModel):
+    token: str
