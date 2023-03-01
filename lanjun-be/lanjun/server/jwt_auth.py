@@ -5,7 +5,7 @@ from jose import JWTError, jwt
 
 from lanjun.common.settings import JWT_SECRET
 from lanjun.domain.user import UserModel
-from lanjun.exceptions import InvalidJwt
+from lanjun.exceptions import AuthorizationException, InvalidJwt
 
 
 def generate_jwt(user: UserModel) -> str:
@@ -34,6 +34,29 @@ def get_user_id(authorization: str = Header(..., regex="Bearer .*")) -> str:
         )
     except JWTError as exc:
         raise InvalidJwt(str(exc)) from exc
+
+    user_id: str = payload.get("sub")  # type: ignore
+    return user_id
+
+
+def get_admin_user_id(authorization: str = Header(..., regex="Bearer .*")) -> str:
+    token = _get_token_from_header(authorization)
+    try:
+        payload = jwt.decode(
+            token,
+            JWT_SECRET,
+            algorithms="HS256",
+            options={
+                "require_sub": True,
+                "require_exp": True,
+            },
+        )
+    except JWTError as exc:
+        raise InvalidJwt(str(exc)) from exc
+
+    is_admin: str = bool(payload.get("is_admin", False))  # type: ignore
+    if not is_admin:
+        raise AuthorizationException("Admin user needed")
 
     user_id: str = payload.get("sub")  # type: ignore
     return user_id

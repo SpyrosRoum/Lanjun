@@ -1,3 +1,5 @@
+from lanjun.domain.item import ItemModel
+from lanjun.http_models.requests import CreateItem
 from lanjun.http_models.responses import Category, CategoryItems, ItemResponse
 from lanjun.repos.item import ItemRepo
 
@@ -13,3 +15,9 @@ async def get_items_per_category() -> CategoryItems:
         )
 
     return CategoryItems(categories=result_categories)
+
+
+async def create_item(item_info: CreateItem) -> ItemModel:
+    item = ItemModel.from_item_create_info(item_info)
+    await ItemRepo.save(item)
+    return item
