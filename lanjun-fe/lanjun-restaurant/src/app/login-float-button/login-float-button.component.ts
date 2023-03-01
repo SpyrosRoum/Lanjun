@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../auth.service';
 
 
@@ -12,17 +13,14 @@ import { AuthService } from '../auth.service';
 export class LoginFloatButtonComponent implements OnInit {
   public logged: boolean;
   public toggle: boolean;
-
-  // private formLogin: FormGroup;
+  private subscription: Subscription;
 
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.logged = false;
     this.toggle = false;
-
-    // this.formLogin = this.fb.group({
-    //   email: ['', Validators.required],
-    //   password: ['', Validators.required]
-    // });
+    this.subscription = AuthService.loggedinSubject.subscribe(l => {
+      this.logged = l;
+    })
   }
 
   ngOnInit(): void {
@@ -33,21 +31,19 @@ export class LoginFloatButtonComponent implements OnInit {
   }
 
   login(form: NgForm) {
-    // const val = this.formLogin.value;
     console.log(form.value);
-    // if (val.email && val.password) {
-      // this.authService.login(val.email, val.password)
-      //   .subscribe(
-      //     () => {
-      //       console.log("User is logged in");
-      //     }
-        // );
-    // }
+    if (form.value.email && form.value.password) {
+      this.authService.login(form.value.email, form.value.password);
+    }
     form.resetForm();//works
     return false;
   }
 
   signup(form: NgForm) {
+    if(form.value.email && form.value.name && form.value.password && (form.value.password === form.value.c_password) && form.value.phone && form.value.address){
+      this.authService.signup(form.value.email, form.value.name, form.value.password, form.value.phone, form.value.address, form.value.floor, form.value.bell);
+    }
+    
     console.log(form.value);
   }
 }

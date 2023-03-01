@@ -1,0 +1,58 @@
+.cell {
+    overflow: hidden;
+    width: 9rem;
+    min-width: 9rem;
+    max-width: 9rem;
+    padding-inline: .5rem;
+}
+
+td>div {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    width: 9rem;
+    min-width: 9rem;
+    max-width: 9rem;
+}
+
+input{
+    width: 8rem;
+    min-width: 8rem;
+    max-width: 8rem;
+}
+
+.delete {
+    display: grid;
+    justify-items: center;
+    grid-auto-flow: column;
+    width: 4rem;
+}
+
+.img {
+    position: initial;
+   
+    height: 2rem;
+    width: 2rem;
+    overflow: visible !important;
+    border-radius: 1rem;
+    transition: transform ease-in .2s;
+}
+
+.img:hover {
+    cursor: pointer;
+    z-index: 10;
+}
+
+.item:hover {
+    transform: scale(5);
+}
+
+tr:nth-child(even) {
+    background-color: gray;
+}
+
+tr,
+td {
+    border: none;
+    outline: none;
+}

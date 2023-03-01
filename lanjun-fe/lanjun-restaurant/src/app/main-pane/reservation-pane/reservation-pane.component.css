@@ -9,6 +9,7 @@
     font-family: 'Eagle Lake', cursive;
     position: relative;
     font-size: 3rem;
+    color: var(--main-color);
 }
 
 .reservation-title::before {

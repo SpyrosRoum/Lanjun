@@ -19,12 +19,13 @@
             </div>
 
             <app-reservation-pane *ngIf="reservation"></app-reservation-pane>
-            <div class="button-complete" (click)="buy()">Complete your order</div>
+            <div *ngIf="logged" class="button-complete" (click)="buy()">Complete your order</div>
+            <div *ngIf="!logged" class="button-complete" (click)="toggleLoginFloatButton()">Login to complete your order!</div>
         </div>
     </div>
     <div *ngIf="cartItems.length===0" class="category ">
         <div class="category-name">No Items</div>
-        <div class="button-menu" (click)="swapper('menu')"> Go to our menu!</div>
+        <div class="button-complete button-menu" (click)="swapper('menu')"> Go to our menu!</div>
     </div>
 </div>
 

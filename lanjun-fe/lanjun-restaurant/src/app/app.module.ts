@@ -13,6 +13,8 @@ import { ReservationPaneComponent } from './main-pane/reservation-pane/reservati
 import { AboutPaneComponent } from './main-pane/about-pane/about-pane.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { AdminPaneComponent } from './main-pane/admin-pane/admin-pane.component';
+import { ItemTableComponent } from './main-pane/admin-pane/item-table/item-table.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { FormsModule } from '@angular/forms';
     DeliveryPaneComponent,
     ItemComponent,
     ReservationPaneComponent,
-    AboutPaneComponent
+    AboutPaneComponent,
+    AdminPaneComponent,
+    ItemTableComponent
   ],
   imports: [
     BrowserModule,

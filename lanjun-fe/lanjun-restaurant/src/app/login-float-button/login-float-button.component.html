@@ -1,6 +1,7 @@
-<div class="order" (click)="toggleDiv()">
+<div id="login-button" class="order" (click)="toggleDiv()">
     <div class="overlay">
-        <div class="text">Login!</div>
+        <div *ngIf="!logged" class="text">Login!</div>
+        <div *ngIf="logged" class="text">Profile</div>
     </div>
 </div>
 
@@ -8,8 +9,8 @@
     <div class="login-section">
         <div class="login-title">Login</div>
         <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" value="" ngModel>
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" value="" ngModel>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" value="" ngModel>
             <input class="button-complete" type="submit" value="Log in!">
@@ -19,12 +20,14 @@
     <div class="login-section">
         <div class="login-title">Sign Up</div>
         <form #signupForm="ngForm" (ngSubmit)="signup(signupForm)">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" value="" ngModel>
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" value="" ngModel>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="" ngModel>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" value="" ngModel>
             <label for="c_password">Confirm: </label>
-            <input type="c_password" id="c_password" name="c_password" value="" ngModel>
+            <input type="password" id="c_password" name="c_password" value="" ngModel>
             <label for="phone">Phone: </label>
             <input type="phone" id="phone" name="phone" value="" ngModel>
             <label for="address">(Optional) Address: </label>
