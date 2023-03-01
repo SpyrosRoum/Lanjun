@@ -11,12 +11,17 @@ class ItemResponse(BaseModel):
     name: str
     description: str
     price: Decimal
-    count: int
     image: str
 
     @classmethod
     def from_model(cls, model: ItemModel) -> "ItemResponse":
-        return cls(image=model.image_url, **model.dict())
+        return cls(
+            id=model.id,
+            name=model.name,
+            description=model.description,
+            price=model.price,
+            image=model.image_url,
+        )
 
 
 class Category(BaseModel):

@@ -17,7 +17,6 @@ class Item(SQLModel, table=True):
     name: str = Field(nullable=False, unique=True)
     description: str
     price: Decimal
-    count: int = Field(nullable=False, ge=0)
     category: str
     image_url: str
 

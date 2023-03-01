@@ -10,7 +10,9 @@ class NotFoundException(AppException):
 
 
 class AuthorizationException(AppException):
-    pass
+    def __init__(self, message: Optional[str] = None) -> None:
+        message = message or "Could not validate credentials"
+        super().__init__(message)
 
 
 class UserExists(AppException):
@@ -26,6 +28,4 @@ class InvalidCredentials(AuthorizationException):
 
 
 class InvalidJwt(AuthorizationException):
-    def __init__(self, message: Optional[str] = None) -> None:
-        message = message or "Could not validate credentials"
-        super().__init__(message)
+    pass

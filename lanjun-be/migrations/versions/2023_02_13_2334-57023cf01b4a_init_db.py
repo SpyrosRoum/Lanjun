@@ -33,7 +33,6 @@ def upgrade() -> None:
         sa.Column("name", sa.Text, nullable=False, unique=True),
         sa.Column("description", sa.Text, nullable=False),
         sa.Column("price", sa.DECIMAL, nullable=False),
-        sa.Column("count", sa.Integer, nullable=False),
         sa.Column("category", sa.Text, nullable=False),
         sa.Column("image_url", sa.Text, nullable=False),
     )
