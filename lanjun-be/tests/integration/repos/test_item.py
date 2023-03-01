@@ -17,7 +17,6 @@ class TestItemRepo:
             name: Optional[str] = None,
             description: str = "item description",
             price: Decimal = Decimal("3.14"),
-            count: int = 5,
             category: str = "category A",
             image_url: str = "https://example.com",
         ) -> ItemModel:
@@ -26,7 +25,6 @@ class TestItemRepo:
                 name=name or str(uuid4()),  # Name must be unique
                 description=description,
                 price=price,
-                count=count,
                 category=category,
                 image_url=image_url,
             )

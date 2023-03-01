@@ -11,7 +11,6 @@ class ItemModel(BaseModel):
     name: str
     description: str
     price: Decimal
-    count: int
     category: str
     image_url: str
 

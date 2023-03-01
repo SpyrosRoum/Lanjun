@@ -11,7 +11,6 @@ class ItemResponse(BaseModel):
     name: str
     description: str
     price: Decimal
-    count: int
     image: str
 
     @classmethod
