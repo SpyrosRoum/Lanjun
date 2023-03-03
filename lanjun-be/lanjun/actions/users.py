@@ -3,6 +3,7 @@ from uuid import UUID
 
 import bcrypt
 
+from lanjun.domain.enums import UserType
 from lanjun.domain.user import UserModel
 from lanjun.http_models.requests import AuthUser, CreateUser
 from lanjun.repos.user import UserRepo
@@ -20,9 +21,9 @@ def _check_password(pwd: str, hashed_pwd: str) -> bool:
     return bcrypt.checkpw(pwd_bytes, hashed_pwd_bytes)
 
 
-async def create_user(user: CreateUser) -> UUID:
+async def create_user(user: CreateUser, user_type: UserType = UserType.NORMAL) -> UUID:
     hashed_pwd = _hash_password(user.password)
-    user_id = await UserRepo.create_new_user(user, hashed_pwd)
+    user_id = await UserRepo.create_new_user(user, hashed_pwd, user_type)
     return user_id
 
 

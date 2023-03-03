@@ -6,6 +6,7 @@ from uuid import uuid4
 import pytest
 from httpx import AsyncClient
 
+from lanjun.domain.enums import UserType
 from lanjun.http_models.requests import CreateUser
 from lanjun.http_models.responses import LoginToken, UserCreated
 from lanjun.repos.user import UserRepo
@@ -47,6 +48,25 @@ class TestSignUp:
         user = await UserRepo.get(user_created.id)
         assert user is not None
         assert user.email == "foo@mail.com"
+
+    async def test_signup_admin_user(
+        self, test_client: AsyncClient, get_create_user, admin_jwt_token: str
+    ):
+        create_user = get_create_user(email="foo@mail.com")
+        res = await test_client.post(
+            "/v1/create_admin",
+            json=create_user.dict(),
+            headers={"Authorization": f"Bearer {admin_jwt_token}"},
+        )
+
+        assert res.status_code == 201
+
+        user_created = UserCreated.validate(res.json())
+
+        user = await UserRepo.get(user_created.id)
+        assert user is not None
+        assert user.email == "foo@mail.com"
+        assert user.type == UserType.ADMIN
 
     async def test_duplicate_mail(self, test_client: AsyncClient, get_create_user):
         create_user = get_create_user(email="foo@mail.com")
