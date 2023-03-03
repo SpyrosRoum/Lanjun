@@ -5,15 +5,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from starlette.requests import Request
 
-from lanjun.common.settings import LOGGING_LEVEL
+from lanjun.common.logging import setup_logger
 from lanjun.exceptions import AppException, AuthorizationException, NotFoundException, UserExists
+from lanjun.server.middlewares.log import RequestLogMiddleware
 from lanjun.server.routes import auth, health, items
 
-logging.getLogger().setLevel(LOGGING_LEVEL)
-
+setup_logger()
 
 logger = logging.getLogger(__name__)
-
 app = FastAPI()
 
 app.add_middleware(
@@ -23,6 +22,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.add_middleware(RequestLogMiddleware)
 
 app.include_router(health.router)
 app.include_router(items.router)
