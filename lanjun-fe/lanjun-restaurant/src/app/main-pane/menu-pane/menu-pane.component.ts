@@ -34,7 +34,7 @@ export class MenuPaneComponent implements OnInit, OnDestroy {
         return this.categories;
     }
 
-    getCountOfItem(id: number): number{
+    getCountOfItem(id: string): number{
         return this.cartService.getCountByItemId(id);
     }
 }

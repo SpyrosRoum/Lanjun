@@ -8,12 +8,12 @@ import { CartService } from 'src/app/cart.service';
 })
 export class AddToCartComponent implements OnInit {
 
-  @Input() itemId: number;
+  @Input() itemId: string;
   @Input() count: number;
   @Input() delivery: boolean;
 
   constructor(private cartService: CartService) {
-    this.itemId = -1;
+    this.itemId = "-1";
     this.count = 0;
     this.delivery = false;
   }

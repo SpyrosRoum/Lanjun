@@ -2,13 +2,14 @@
     display: grid;
     /* justify-content: center; */
     align-content: baseline;
-    /* width: calc(100% - 18rem); */
+    min-width: 30rem;
 }
 
 .reservation-title {
     font-family: 'Eagle Lake', cursive;
     position: relative;
     font-size: 3rem;
+    color: var(--main-color);
 }
 
 .reservation-title::before {
@@ -69,4 +70,12 @@
 
 .reservation-submit:hover {
     cursor: pointer;
+}
+
+.reservation-complete {
+	font-size: 2rem;
+	background: var(--secondary-color);
+	padding: 1rem;
+	border-radius: 2rem;
+	outline: .2rem solid var(--main-color);
 }

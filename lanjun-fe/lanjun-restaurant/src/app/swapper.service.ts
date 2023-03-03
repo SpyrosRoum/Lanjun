@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -9,7 +9,7 @@ export class SwapperService {
   static panelSubject: Subject<string> = new Subject();
 
   constructor() {
-    this.panel = 'reservation';
+    this.panel = 'admin';
   }
 
   getPanel(): string {

@@ -1,0 +1,51 @@
+<table>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>image</th>
+        <th>description</th>
+        <th>price</th>
+        <th>category</th>
+        <th>edit</th>
+        <th>delete</th>
+    </tr>
+    <tr *ngFor="let item of items">
+        <td class="cell">{{item.id}}</td>
+        <td class="cell"><input type="text" name="" id="name_item{{item.id}}" value="{{item.name}}" disabled></td>
+        <td>
+            <div><img id="img_item{{item.id}}" class="img item" src="{{item.image}}" alt=""></div>
+
+            <input type="text" name="hide" id="img_item{{item.id}}" value="{{item.image}}" disabled hidden>
+        </td>
+        <td class="cell"><input type="text" name="" id="description_item{{item.id}}" value="{{item.description}}" disabled></td>
+        <td class="cell"><input type="text" name="" id="price_item{{item.id}}" value="{{item.price}}" disabled></td>
+        <td class="cell"><input type="text" name="" id="category_item{{item.id}}" value="{{item.category}}" disabled></td>
+        <td>
+            <img id="edit_item{{item.id}}" class="img" src="https://cdn-icons-png.flaticon.com/512/9541/9541066.png"
+                alt="" (click)="edit(item.id,'item')">
+            <img id="save_item{{item.id}}" class="img" src="https://cdn-icons-png.flaticon.com/512/3616/3616384.png"
+                alt="" (click)="save(item.id,'item')" hidden>
+        </td>
+        <td class="delete">
+            <img id="bin_item{{item.id}}" class="img" src="https://cdn-icons-png.flaticon.com/512/9790/9790368.png"
+                alt="" (click)="deleteCheck(item.id,'item')">
+            <img id="yes_item{{item.id}}" class="img" src="https://cdn-icons-png.flaticon.com/512/5610/5610944.png"
+                alt="" (click)="deleteItem(item.id,'item')" hidden>
+            <img id="no_item{{item.id}}" class="img" src="https://cdn-icons-png.flaticon.com/512/5974/5974771.png"
+                alt="" (click)="showBin(item.id,'item')" hidden>
+        </td>
+    </tr>
+    <tr>
+        <td class="cell"></td>
+        <td class="cell"><input type="text" id="new_item_name"></td>
+        <td class="cell"><input type="text" id="new_item_image"></td>
+        <td class="cell"><input type="text" id="new_item_description"></td>
+        <td class="cell"><input type="text" id="new_item_price"></td>
+        <td class="cell"><input type="text" id="new_item_category"></td>
+        <td>
+            <img class="img" src="https://cdn-icons-png.flaticon.com/512/3616/3616384.png" alt=""
+                (click)="newItem()">
+        </td>
+        <td class="delete"> </td>
+    </tr>
+</table>

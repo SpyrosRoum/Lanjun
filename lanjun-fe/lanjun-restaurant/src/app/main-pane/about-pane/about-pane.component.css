@@ -1,0 +1,81 @@
+.about-panel {
+    display: grid;
+    position: relative;
+    height: 100%;
+    /* margin-top: 50%; */
+    overflow: scroll;
+    width: 100%;
+    font-size: 1.3rem;
+    font-family: 'Eagle Lake', cursive;
+    z-index: -1;
+
+    background-image: url("https://images.squarespace-cdn.com/content/v1/596fd9989f7456d6bbc11ad1/1582582093771-DK3PS4246AMFWRULJHV8/The+Formosa+Cafe+3.jpg?format=2500w");
+}
+
+.logo-container {
+    background-color: var(--main-color);
+    opacity: 0.9;
+}
+
+.logo {
+    display: grid;
+    position: relative;
+    z-index: 1000;
+    height: 10rem;
+    width: 100%;
+
+    background-image: url("/assets/logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+
+.about-box {
+    --margin-left: 40rem;
+    display: grid;
+    position: relative;
+    width: 100%;
+
+    padding-block: 2rem;
+    overflow-wrap: break-word;
+    text-align: center;
+    z-index: -1;
+    opacity: 0.9;
+}
+
+
+
+.about-box:nth-child(even) {
+    background-color: var(--main-color);
+}
+
+.about-box:nth-child(odd) {
+    background-color: var(--secondary-color);
+}
+
+.about-box.first {
+    background-color: var(--main-color);
+}
+
+.about-paragraph {
+    margin-left: var(--margin-left);
+    margin-right: 5rem;
+    display: grid;
+    justify-items: center;
+}
+
+.about-text {
+    width: 50rem;
+}
+
+.justify-left {
+    justify-self: left;
+    text-align: left;
+
+}
+
+.justify-right {
+    justify-self: right;
+    text-align: right;
+}

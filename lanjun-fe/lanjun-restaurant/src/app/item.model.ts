@@ -1,8 +1,8 @@
 export class Item {
-    id!: number;
+    id!: string;
     name!: string;
     image!: string;
     description!: string;
     price!: number;
-    
+    category!: string;
 }

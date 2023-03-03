@@ -1,14 +1,15 @@
 <div class="reservation">
     <div class="reservation-title">Reserve a Table</div>
-    <form action="POST" class="reservation-form">
-        <select name="people" id="people" class="reservation-people">
+    <form #signupForm="ngForm" class="reservation-form" (ngSubmit)="reserve(signupForm)">
+        <select name="people" id="people" class="reservation-people" ngModel>
             <option value="1">1 person</option>
-            <option *ngFor="let item of [].constructor(8); let i = index" value="i">{{i+2}} people</option>
-            <option value="1">10+ people</option>
+            <option *ngFor="let item of [].constructor(8); let i = index" value="{{i+2}}">{{i+2}} people</option>
+            <option value="10">10+ people</option>
         </select>
 
-        <input type="date" id="date" name="date" class="reservation-date">
+        <input type="date" id="date" name="date" class="reservation-date" ngModel>
 
-        <input type="button" value="Reserve" class="reservation-submit">
+        <input type="submit" value="Reserve" class="reservation-submit">
     </form>
+    <div *ngIf="reserved" class="reservation-complete">Reserved for {{people}} at {{date}}!</div>
 </div>

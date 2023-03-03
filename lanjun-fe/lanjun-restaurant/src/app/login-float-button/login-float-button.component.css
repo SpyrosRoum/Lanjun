@@ -16,7 +16,8 @@
     border: 0.1rem white solid;
     outline: 0.1rem black solid;
     transition: .5s ease transform;
-    background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Freer_SacklerDSCF8044.JPG/1218px-Freer_SacklerDSCF8044.JPG");
+    /* background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Freer_SacklerDSCF8044.JPG/1218px-Freer_SacklerDSCF8044.JPG"); */
+    background-image: url("/assets/small_logo.png");
     background-size: cover;
     height: 4rem;
     width: 4rem;
@@ -39,4 +40,141 @@
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     text-align: center;
+}
+
+.login-pop-up {
+    position: fixed;
+    bottom: 11rem;
+    right: 1rem;
+    float: right;
+    height: 25rem;
+
+    background: var(--secondary-color);
+
+    border-radius: 5%;
+    outline: black .1rem solid;
+
+    font-family: 'Eagle Lake', cursive;
+
+    justify-items: center;
+
+    animation: pop 500ms forwards;
+}
+
+@keyframes pop {
+    0% {
+        transform: translateY(2rem);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.tab-buttons {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: end;
+}
+
+.tab-buttons>div {
+    width: 100%;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-block: .5rem;
+    border-bottom: var(--text-color) solid .2rem;
+    opacity: 0.3;
+}
+
+.tab-buttons>div[active]{
+    opacity: 1;
+    font-size: 2rem;
+    border-bottom: var(--secondary-color) solid .2rem;
+}
+
+.tab-buttons>div:hover {
+    cursor: pointer;
+    border-bottom: var(--main-color) solid .2rem;
+}
+
+.login-section {
+    display: grid;
+    margin: 1rem;
+    align-items: center;
+    align-self: center;
+    color: var(--text-color);
+}
+
+.login-section>form {
+    display: grid;
+    gap: .5rem;
+    grid-template-columns: 12rem 11rem;
+}
+
+.login-section:hover>.login-title {
+    border-bottom: black solid .2rem;
+    color: black;
+}
+
+.login-title {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-block: .5rem;
+    border-bottom: var(--text-color) solid .2rem;
+}
+
+.login-section:last-of-type {
+    margin-bottom: 2rem;
+}
+
+.button-complete {
+    bottom: 0;
+    width: auto;
+    left: 53%;
+    align-self: center;
+    font-size: 1.5rem;
+
+    background-color: var(--main-color);
+    color: var(--secondary-color);
+    border: .1rem solid var(--main-color);
+    padding-inline: .5rem;
+    border-radius: 10rem;
+
+    transition: all .2s ease-in;
+    grid-column: 1/3;
+}
+
+
+.button-complete:hover {
+    cursor: pointer;
+
+    background-color: var(--secondary-color);
+    color: var(--main-color);
+    border-color: var(--main-color);
+}
+
+.user {
+    padding: 1rem;
+}
+
+.user-name {
+    font-size: 2rem;
+}
+
+.user-email {
+    display: flex;
+    justify-content: flex-end;
+    font-style: italic;
+}
+
+.user-address-details {
+    border: .2rem solid var(--main-color);
+    border-radius: 1rem;
+    padding: .5rem;
+}
+
+.user-admin {
+    margin-top: 1rem;
+    ;
 }

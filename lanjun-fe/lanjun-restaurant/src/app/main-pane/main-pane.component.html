@@ -2,6 +2,8 @@
     <div *ngSwitchCase="'home'" class="main-panel home-panel"></div>
     <app-menu-pane *ngSwitchCase="'menu'" class="main-panel"></app-menu-pane>
     <app-delivery-pane *ngSwitchCase="'delivery'" class="main-panel"></app-delivery-pane>
-    <app-reservation-pane *ngSwitchCase="'reservation'" class="main-panel-2"></app-reservation-pane>
+    <app-reservation-pane *ngSwitchCase="'reservation'" class="main-panel-center reservation"></app-reservation-pane>
+    <app-about-pane *ngSwitchCase="'about'"></app-about-pane>
+    <app-admin-pane *ngSwitchCase="'admin'" class="main-panel admin"></app-admin-pane>
     <div *ngSwitchDefault>Nothing</div>
 </div>

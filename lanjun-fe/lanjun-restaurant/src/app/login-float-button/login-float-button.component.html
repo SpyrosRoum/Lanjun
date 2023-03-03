@@ -1,5 +1,59 @@
-<div class="order">
+<div id="login-button" class="order" (click)="toggleDiv()">
     <div class="overlay">
-        <div class="text">Login!</div>
+        <div *ngIf="!logged" class="text">Login!</div>
+        <div *ngIf="logged" class="text">Profile</div>
+    </div>
+</div>
+
+<div *ngIf="!logged&&!toggle" id="login-pop-up" class="login-pop-up">
+    <div class="tab-buttons">
+        <div id="tab-button-login" (click)="changeTab(true)" active>Login</div>
+        <div id="tab-button-signup" (click)="changeTab(false)">Sign up</div>
+    </div>
+    <div *ngIf="loginTab" class="login-section">
+        <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" value="" ngModel>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" value="" ngModel>
+            <input class="button-complete" type="submit" value="Log in!">
+        </form>
+    </div>
+
+    <div *ngIf="!loginTab" class="login-section">
+        <form #signupForm="ngForm" (ngSubmit)="signup(signupForm)">
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" value="" ngModel>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="" ngModel>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" value="" ngModel>
+            <label for="c_password">Confirm: </label>
+            <input type="password" id="c_password" name="c_password" value="" ngModel>
+            <label for="phone">Phone: </label>
+            <input type="phone" id="phone" name="phone" value="" ngModel>
+            <label for="address">(Optional) Address: </label>
+            <input type="address" id="address" name="address" value="" ngModel>
+            <label for="floor">(Optional) Floor: </label>
+            <input type="floor" id="floor" name="floor" value="" ngModel>
+            <label for="bell">(Optional) Bell: </label>
+            <input type="bell" id="bell" name="bell" value="" ngModel>
+            <input class="button-complete" type="submit" value="Sign up!">
+        </form>
+    </div>
+</div>
+
+<div *ngIf="logged&&toggle" id="login-pop-up" class="login-pop-up">
+    <div class="user">
+        <div class="user-name">Username</div>
+        <div class="user-email">email</div>
+        <div class="user-phone">Phone</div>
+
+        <div class="user-address-details">
+            <div class="user-address-and-floor">Address, Floor</div>
+            <div class="user-bell">Bell: bell</div>
+        </div>
+
+        <div class="user-admin button-complete" (click)="swapper()">Admin Page</div>
     </div>
 </div>
