@@ -18,7 +18,7 @@ class CreateUser(BaseModel):
 
     @validator("email")
     def valid_email(cls, email: str) -> str:  # noqa
-        return validate_email(email).email.lower()  # type: ignore
+        return validate_email(email, check_deliverability=False).email.lower()  # type: ignore
 
 
 class AuthUser(BaseModel):
@@ -27,7 +27,7 @@ class AuthUser(BaseModel):
 
     @validator("email")
     def valid_email(cls, email: str) -> str:  # noqa
-        return validate_email(email).email.lower()  # type: ignore
+        return validate_email(email, check_deliverability=False).email.lower()  # type: ignore
 
 
 class CreateItem(BaseModel):
