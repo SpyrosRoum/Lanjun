@@ -1,6 +1,10 @@
 import asyncio
 import argparse
 
+from scripts.path import setup_path
+
+setup_path()
+
 from lanjun.actions.users import create_user
 from lanjun.domain.user import UserType
 from lanjun.http_models.requests import CreateUser
