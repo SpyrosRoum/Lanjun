@@ -65,5 +65,6 @@ export class LoginFloatButtonComponent implements OnInit {
 
   swapper() {
     this.swapperService.setPanel('admin');
+    this.toggleDiv();
   }
 }

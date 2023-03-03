@@ -20,7 +20,7 @@ export class AuthService {
   login(email: string, password: string) {
     //returns token
     this.api.login(email, password).subscribe((t) => {
-      AuthService.token = t;
+      AuthService.token = t.token;
       window.localStorage.setItem("token", t);
       AuthService.loggedin = true;
       AuthService.loggedinSubject.next(AuthService.loggedin);

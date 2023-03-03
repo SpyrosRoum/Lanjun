@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/api.service';
 import { AuthService } from 'src/app/auth.service';
 import { CartItem } from 'src/app/cart-item.model';
 import { CartService } from 'src/app/cart.service';
 import { ItemService } from 'src/app/item.service';
-import { OrderService } from 'src/app/order.service';
 import { Reservation } from 'src/app/reservation.model';
 import { SwapperService } from 'src/app/swapper.service';
 
@@ -21,7 +21,7 @@ export class DeliveryPaneComponent implements OnInit {
 
   constructor(private cartService: CartService, private itemService: ItemService,
     private swapperService: SwapperService,
-    private orderService: OrderService) {
+    private api: ApiService) {
     this.cartItems = cartService.getCartItems();
     this.sum = cartService.getPriceSum();
     this.reservation = false;
@@ -63,7 +63,7 @@ export class DeliveryPaneComponent implements OnInit {
 
   buy() {
     //TODO: Add posibility of payment with cash
-    this.orderService.order(AuthService.token, this.sum, true, this.cartItems, this.reservationR);
+    this.api.order(AuthService.token, this.sum, true, this.cartItems, this.reservationR);
   }
 
   reserve(res: Reservation) {

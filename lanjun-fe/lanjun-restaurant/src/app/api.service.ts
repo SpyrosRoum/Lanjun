@@ -2,6 +2,8 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
+import { CartItem } from './cart-item.model';
+import { Reservation } from './reservation.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,8 @@ export class ApiService {
       console.error(
         `Backend returned code ${error.status}, ` + `body was: ${error.error}`
       );
+      console.error(error);
+
     }
     return throwError(error);
   }
@@ -80,10 +84,20 @@ export class ApiService {
   }
 
   public addItem(n: string | undefined, i: string | undefined, d: string | undefined, p: number | undefined, c: string | undefined): Observable<any> {
+
+    console.log(AuthService.token);
+
     let headers: HttpHeaders = this.headers;
     headers = headers.append('Content-Type', 'application/json');
-    headers = headers.append('Authorization', AuthService.token);
+    headers = headers.append('Authorization', `Bearer ${AuthService.token}`);
+
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'Authorization': `Bearer ${AuthService.token.toString()}`
+    // })
+
     const json = JSON.stringify({ name: n, image_url: i, description: d, category: c, price: p });
+    console.log(json);
 
     return this.http.post("http://135.181.25.134:8080/v1/items", json, { headers }).pipe(
       map(this.extractData),
@@ -101,6 +115,13 @@ export class ApiService {
     let options = { params: httpParams, headers: headers };
 
     return this.http.delete("http://135.181.25.134:8080/v1/items", options).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
+
+  public order(token: string, sum: number, prepaid: boolean, cartItems: CartItem[], reservationR: Reservation): Observable<any> {
+    return this.http.post('http://135.181.25.134:8080/v1/order', { token, sum, prepaid, cartItems, reservationR }).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );

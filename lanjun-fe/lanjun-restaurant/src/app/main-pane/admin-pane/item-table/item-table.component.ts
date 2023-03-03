@@ -155,7 +155,7 @@ export class ItemTableComponent implements OnInit {
   }
 
   deleteCheck(id: string, type: string) {
-    
+
     let bin = document.getElementById("bin_" + type + id);
     if (bin) {
       bin.hidden = true;
