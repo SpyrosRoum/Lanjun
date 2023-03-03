@@ -16,3 +16,4 @@ USER worker
 WORKDIR /home/worker/app
 COPY --chown=worker:worker . .
 ENV PATH="/home/worker/.local/bin:${PATH}"
+ENV PYTHONPATH="${PYTHONPATH}:/home/worker/app"
