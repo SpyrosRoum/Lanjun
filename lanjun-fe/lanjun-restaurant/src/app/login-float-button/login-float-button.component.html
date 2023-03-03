@@ -5,9 +5,12 @@
     </div>
 </div>
 
-<div *ngIf="!logged&&toggle" id="login-pop-up" class="login-pop-up">
-    <div class="login-section">
-        <div class="login-title">Login</div>
+<div *ngIf="!logged&&!toggle" id="login-pop-up" class="login-pop-up">
+    <div class="tab-buttons">
+        <div id="tab-button-login" (click)="changeTab(true)" active>Login</div>
+        <div id="tab-button-signup" (click)="changeTab(false)">Sign up</div>
+    </div>
+    <div *ngIf="loginTab" class="login-section">
         <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
             <label for="email">Email:</label>
             <input type="text" id="email" name="email" value="" ngModel>
@@ -17,8 +20,7 @@
         </form>
     </div>
 
-    <div class="login-section">
-        <div class="login-title">Sign Up</div>
+    <div *ngIf="!loginTab" class="login-section">
         <form #signupForm="ngForm" (ngSubmit)="signup(signupForm)">
             <label for="email">Email:</label>
             <input type="text" id="email" name="email" value="" ngModel>
@@ -42,5 +44,16 @@
 </div>
 
 <div *ngIf="logged&&toggle" id="login-pop-up" class="login-pop-up">
-    
+    <div class="user">
+        <div class="user-name">Username</div>
+        <div class="user-email">email</div>
+        <div class="user-phone">Phone</div>
+
+        <div class="user-address-details">
+            <div class="user-address-and-floor">Address, Floor</div>
+            <div class="user-bell">Bell: bell</div>
+        </div>
+
+        <div class="user-admin button-complete" (click)="swapper()">Admin Page</div>
+    </div>
 </div>

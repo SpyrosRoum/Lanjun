@@ -71,3 +71,11 @@
 .reservation-submit:hover {
     cursor: pointer;
 }
+
+.reservation-complete {
+	font-size: 2rem;
+	background: var(--secondary-color);
+	padding: 1rem;
+	border-radius: 2rem;
+	outline: .2rem solid var(--main-color);
+}

@@ -4,6 +4,7 @@ import { CartItem } from 'src/app/cart-item.model';
 import { CartService } from 'src/app/cart.service';
 import { ItemService } from 'src/app/item.service';
 import { OrderService } from 'src/app/order.service';
+import { Reservation } from 'src/app/reservation.model';
 import { SwapperService } from 'src/app/swapper.service';
 
 @Component({
@@ -16,6 +17,7 @@ export class DeliveryPaneComponent implements OnInit {
   public sum: number = 0;
   public reservation: boolean;
   public logged: boolean;
+  private reservationR: Reservation;
 
   constructor(private cartService: CartService, private itemService: ItemService,
     private swapperService: SwapperService,
@@ -24,6 +26,7 @@ export class DeliveryPaneComponent implements OnInit {
     this.sum = cartService.getPriceSum();
     this.reservation = false;
     this.logged = false;
+    this.reservationR = new Reservation();
 
     CartService.cartItemListSubject.subscribe(im => {
       this.sum = 0;
@@ -44,10 +47,10 @@ export class DeliveryPaneComponent implements OnInit {
     this.logged = AuthService.loggedin;
     console.log(AuthService.loggedin);
     console.log(AuthService.token);
-    
+
     AuthService.loggedinSubject.subscribe(l => {
       console.log("Delivery " + l);
-      
+
       this.logged = l;
     });
   }
@@ -60,8 +63,11 @@ export class DeliveryPaneComponent implements OnInit {
 
   buy() {
     //TODO: Add posibility of payment with cash
-    //TODO: Add reservation
-    this.orderService.order(AuthService.token, this.sum, true, this.cartItems);
+    this.orderService.order(AuthService.token, this.sum, true, this.cartItems, this.reservationR);
+  }
+
+  reserve(res: Reservation) {
+    this.reservationR = res;
   }
 
   toggleReservation() {

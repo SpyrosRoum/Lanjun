@@ -7,18 +7,18 @@ import { ItemService } from "./item.service";
     providedIn: 'root'
 })
 export class CartService {
-    private cartItemMap: Map<number, number>;
+    private cartItemMap: Map<string, number>;
     private cartItemCount: number;
 
-    static cartItemListSubject: Subject<Map<number, number>> = new Subject();
+    static cartItemListSubject: Subject<Map<string, number>> = new Subject();
     static cartItemCountSubject: Subject<number> = new Subject();
 
     constructor(private itemService: ItemService) {
-        this.cartItemMap = new Map<number, number>;
+        this.cartItemMap = new Map<string, number>;
         this.cartItemCount = 0;
     }
 
-    addItem(id: number, count: number) {
+    addItem(id: string, count: number) {
         this.cartItemMap.set(id, count);
         this.cartItemCount++;
 
@@ -26,7 +26,7 @@ export class CartService {
         CartService.cartItemListSubject.next(this.cartItemMap);
     }
 
-    updateItem(id: number, count: number) {
+    updateItem(id: string, count: number) {
         if (count === 0) {
             this.cartItemMap.delete(id);
         } else {
@@ -61,7 +61,7 @@ export class CartService {
         }
     }
 
-    getCountByItemId(id: number) {        
+    getCountByItemId(id: string) {        
         let a = this.getCartItems().filter(i => i.item.id === id); 
         
         if (a.length === 0) {

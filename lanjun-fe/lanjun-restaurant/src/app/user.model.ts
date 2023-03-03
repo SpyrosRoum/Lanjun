@@ -6,4 +6,5 @@ export class User {
     address!: string;
     floor!: string;
     bell!:string;
+    admin!:boolean;
 }

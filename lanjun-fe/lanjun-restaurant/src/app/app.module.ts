@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AdminPaneComponent } from './main-pane/admin-pane/admin-pane.component';
 import { ItemTableComponent } from './main-pane/admin-pane/item-table/item-table.component';
+import { OrderTableComponent } from './main-pane/admin-pane/order-table/order-table.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ItemTableComponent } from './main-pane/admin-pane/item-table/item-table
     ReservationPaneComponent,
     AboutPaneComponent,
     AdminPaneComponent,
-    ItemTableComponent
+    ItemTableComponent,
+    OrderTableComponent
   ],
   imports: [
     BrowserModule,

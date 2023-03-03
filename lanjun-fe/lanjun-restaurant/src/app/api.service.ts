@@ -1,12 +1,12 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-
   private headers: HttpHeaders;
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
@@ -62,6 +62,45 @@ export class ApiService {
     const json = JSON.stringify({ email: email, password: password });
 
     return this.http.post("http://135.181.25.134:8080/v1/login", json, { headers }).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
+
+  public loginWithToken(token: string): Observable<any> {
+    let headers: HttpHeaders = this.headers;
+    headers = headers.append('Content-Type', 'application/json');
+    const json = JSON.stringify({ token: token });
+
+    //TODO Change to login with token 
+    return this.http.post("http://135.181.25.134:8080/v1/login", json, { headers }).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
+
+  public addItem(n: string | undefined, i: string | undefined, d: string | undefined, p: number | undefined, c: string | undefined): Observable<any> {
+    let headers: HttpHeaders = this.headers;
+    headers = headers.append('Content-Type', 'application/json');
+    headers = headers.append('Authorization', AuthService.token);
+    const json = JSON.stringify({ name: n, image_url: i, description: d, category: c, price: p });
+
+    return this.http.post("http://135.181.25.134:8080/v1/items", json, { headers }).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
+
+  public deleteItem(id: string): Observable<any> {
+    let headers: HttpHeaders = this.headers;
+    headers = headers.append('Content-Type', 'application/json');
+    headers = headers.append('Authorization', AuthService.token);
+
+    let httpParams = new HttpParams().set('id', id);
+
+    let options = { params: httpParams, headers: headers };
+
+    return this.http.delete("http://135.181.25.134:8080/v1/items", options).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );

@@ -14,22 +14,27 @@ export class ItemService {
     static categoriesSubject: Subject<Category[]> = new Subject();
     static itemSubject: Subject<Item[]> = new Subject();
 
-    constructor(private api:ApiService) {
+    constructor(private api: ApiService) {
+        this.items = new Array();
         let str = JSON.stringify(jsonfile);
-        this.categories = JSON.parse(str).categories;
+        this.categories = new Array();//JSON.parse(str).categories;
         this.api.getItems().subscribe(
             data => {
                 console.log(data);
-
+                // this.categories = JSON.parse(data);
+                this.categories = JSON.parse(str).categories;
+                this.categories.forEach(category => {
+                    category.items.forEach(item =>{
+                        item.category = category.name;
+                    })
+                    this.items.push(...category.items);
+                })
             },
             err => {
                 console.log(err);
             }
         );
-        this.items = new Array();
-        this.categories.forEach(category => {
-            this.items.push(...category.items);
-        })
+
     }
 
     getAllCategories() {
@@ -40,7 +45,7 @@ export class ItemService {
         ItemService.itemSubject.next(this.items);
     }
 
-    getItemById(id: number): Item {
+    getItemById(id: string): Item {
         return this.items.filter(i => i.id === id)[0];
     }
 }

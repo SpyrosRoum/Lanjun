@@ -18,7 +18,7 @@
                 <div *ngIf="!reservation" class="choose-reservation-text">No, I'd just like a delivery</div>
             </div>
 
-            <app-reservation-pane *ngIf="reservation"></app-reservation-pane>
+            <app-reservation-pane *ngIf="reservation" (reservation)="reserve($event)"></app-reservation-pane>
             <div *ngIf="logged" class="button-complete" (click)="buy()">Complete your order</div>
             <div *ngIf="!logged" class="button-complete" (click)="toggleLoginFloatButton()">Login to complete your order!</div>
         </div>
