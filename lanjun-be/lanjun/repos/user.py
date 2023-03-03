@@ -27,13 +27,15 @@ class UserRepo:
             return UserModel.from_entity(entity)
 
     @classmethod
-    async def create_new_user(cls, user: CreateUser, hashed_pwd: bytes) -> UUID:
+    async def create_new_user(
+        cls, user: CreateUser, hashed_pwd: bytes, user_type: UserType
+    ) -> UUID:
         user_dict = user.dict()
         user_dict.pop("password")
         entity = User(
             **user_dict,
             password=hashed_pwd,
-            type=UserType.NORMAL,
+            type=user_type,
             orders=[],
             reservations=[],
         )
