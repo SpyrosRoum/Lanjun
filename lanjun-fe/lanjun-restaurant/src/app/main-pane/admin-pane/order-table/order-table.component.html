@@ -1,0 +1,38 @@
+<table>
+    <tr>
+        <th>id</th>
+        <th>user_id</th>
+        <th>cost</th>
+        <th>description</th>
+        <th>prepaid</th>
+        <th>created_at</th>
+        <th>delete</th>
+    </tr>
+    <tr *ngFor="let order of orders">
+        <td class="cell">{{order.id}}</td>
+        <td class="cell">{{order.user_id}}</td>
+        <td class="cell">{{order.cost}}</td>
+        <td class="cell">{{order.prepaid}}</td>
+        <td class="cell">{{order.created_at}}</td>
+        <td class="delete">
+            <img id="bin_order{{order.id}}" class="img" src="https://cdn-icons-png.flaticon.com/512/9790/9790368.png"
+                alt="" (click)="deleteCheck(order.id,'order')">
+            <img id="yes_order{{order.id}}" class="img" src="https://cdn-icons-png.flaticon.com/512/5610/5610944.png"
+                alt="" (click)="deleteOrder(order.id,'order')" hidden>
+            <img id="no_order{{order.id}}" class="img" src="https://cdn-icons-png.flaticon.com/512/5974/5974771.png"
+                alt="" (click)="showBin(order.id,'order')" hidden>
+        </td>
+    </tr>
+    <!-- <tr>
+        <td class="cell"></td>
+        <td class="cell"><input type="text" id="new_item_name"></td>
+        <td class="cell"><input type="text" id="new_item_image"></td>
+        <td class="cell"><input type="text" id="new_item_description"></td>
+        <td class="cell"><input type="text" id="new_item_price"></td>
+        <td class="cell"><input type="text" id="new_item_category"></td>
+        <td>
+            <img class="img" src="https://cdn-icons-png.flaticon.com/512/3616/3616384.png" alt="" (click)="newItem()">
+        </td>
+        <td class="delete"> </td>
+    </tr> -->
+</table>
