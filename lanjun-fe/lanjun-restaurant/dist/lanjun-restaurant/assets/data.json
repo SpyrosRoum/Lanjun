@@ -1,0 +1,58 @@
+{
+    "categories": [
+        {
+            "name": "Appetizers",
+            "items": [
+                {
+                    "id": 1,
+                    "name": "Spring Rolls",
+                    "image": "https://images.unsplash.com/photo-1613135373494-d1f6a77d159b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1172&q=80",
+                    "description": "6 τεμάχια Ανοιξιάτικα ρολά με κινέζικο λάχανο, καρότο & κρεμμύδι.",
+                    "price": 4
+                },
+                {
+                    "id": 2,
+                    "name": "Crab & Cheese Wonton",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Pangsit_Goreng_GM.jpg/800px-Pangsit_Goreng_GM.jpg",
+                    "description": "5 τεμάχια. Τραγανά wonton με καβούρι & τυρί κρέμα.",
+                    "price": 5
+                }
+            ]
+        },
+        {
+            "name": "Soups",
+            "items": [
+                {
+                    "id": 3,
+                    "name": "Hot & Sour",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Tom_yam_kung_maenam.jpg",
+                    "description": "Καυτερή & ξυδάτη σούπα με κινέζικο λάχανο, καρότο, κρεμμύδι & tofu.",
+                    "price": 5.5
+                },
+                {
+                    "id": 4,
+                    "name": "White Miso Soup",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Miso_Soup_001.jpg/799px-Miso_Soup_001.jpg",
+                    "price": 6
+                },
+                {
+                    "id": 5,
+                    "name": "Shitake mushroom soup",
+                    "image": "https://images.unsplash.com/photo-1570368336224-455084c1fb31?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+                    "price": 6.5
+                }
+            ]
+        },
+        {
+            "name": "Desserts",
+            "items": [
+                {
+                    "id": 6,
+                    "name": "Fried Banana",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Pisang_Goreng_with_vanilla_ice_cream.jpg/674px-Pisang_Goreng_with_vanilla_ice_cream.jpg",
+                    "price": 4
+                }
+            ]
+        }
+    ]
+}
