@@ -94,7 +94,7 @@ class OrderRepo:
         return orders
 
     @classmethod
-    def delete(cls, order_id: UUID):
+    async def delete(cls, order_id: UUID):
         query = update(Order).where(Order.id == order_id).values(deleted_at=datetime.utcnow())
         async with db_session() as session:
             res = await session.execute(query)
