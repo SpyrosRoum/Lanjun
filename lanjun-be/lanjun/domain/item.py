@@ -1,4 +1,6 @@
+from datetime import datetime
 from decimal import Decimal
+from typing import Optional
 from uuid import UUID, uuid4
 
 from pydantic import BaseModel
@@ -14,6 +16,7 @@ class ItemModel(BaseModel):
     price: Decimal
     category: str
     image_url: str
+    deleted_at: Optional[datetime]
 
     @classmethod
     def from_entity(cls, entity: Item) -> "ItemModel":

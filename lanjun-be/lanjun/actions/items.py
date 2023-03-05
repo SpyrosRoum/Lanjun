@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from lanjun.domain.item import ItemModel
 from lanjun.http_models.requests import CreateItem, UpdateItem
 from lanjun.http_models.responses import Category, CategoryItems, ItemResponse
@@ -25,3 +27,7 @@ async def create_item(item_info: CreateItem) -> ItemModel:
 
 async def update_item(item_info: UpdateItem) -> None:
     await ItemRepo.update_item(item_info)
+
+
+async def delete_item(item_id: UUID) -> None:
+    await ItemRepo.delete(item_id)
