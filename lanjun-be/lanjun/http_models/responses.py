@@ -9,6 +9,10 @@ from lanjun.domain.item import ItemModel
 from lanjun.domain.user import UserModel
 
 
+class IdResponse(BaseModel):
+    id: UUID
+
+
 class ItemResponse(BaseModel):
     id: UUID
     name: str

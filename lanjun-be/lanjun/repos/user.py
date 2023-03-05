@@ -1,3 +1,4 @@
+import logging
 from typing import Optional
 from uuid import UUID
 
@@ -11,8 +12,20 @@ from lanjun.entities.user import User
 from lanjun.exceptions import UserExists
 from lanjun.http_models.requests import CreateUser
 
+logger = logging.getLogger(__name__)
+
 
 class UserRepo:
+    @classmethod
+    async def save(cls, user: UserModel) -> None:
+        entity = User(**user.dict())
+        async with db_session() as session:
+            session.add(entity)
+            try:
+                await session.commit()
+            except IntegrityError:
+                logger.warning(f"Duplicate record found for User `{user.id}`")
+
     @classmethod
     async def get(cls, id_: UUID) -> Optional[UserModel]:
         query = select(User).where(User.id == id_)

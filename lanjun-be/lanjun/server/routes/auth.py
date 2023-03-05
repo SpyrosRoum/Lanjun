@@ -12,8 +12,8 @@ router = APIRouter()
 
 @router.post("/v1/create_admin", status_code=status.HTTP_201_CREATED, response_model=UserCreated)
 async def create_admin(user: CreateUser, user_id: str = Depends(get_admin_user_id)) -> UserCreated:
-    user_id = await user_actions.create_user(user, user_type=UserType.ADMIN)
-    return UserCreated(id=user_id)
+    id_ = await user_actions.create_user(user, user_type=UserType.ADMIN)
+    return UserCreated(id=id_)
 
 
 @router.post("/v1/sign_up", status_code=status.HTTP_201_CREATED, response_model=UserCreated)

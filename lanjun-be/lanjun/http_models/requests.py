@@ -41,3 +41,12 @@ class CreateItem(BaseModel):
 
 class UpdateItem(CreateItem):
     id: UUID
+
+
+class OrderItem(BaseModel):
+    item_id: UUID
+    count: int
+
+
+class CreateOrder(BaseModel):
+    items: list[OrderItem]

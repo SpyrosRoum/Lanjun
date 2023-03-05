@@ -1,3 +1,5 @@
+from decimal import Decimal
+from typing import Optional
 from uuid import UUID
 
 from lanjun.domain.item import ItemModel
@@ -31,3 +33,7 @@ async def update_item(item_info: UpdateItem) -> None:
 
 async def delete_item(item_id: UUID) -> None:
     await ItemRepo.delete(item_id)
+
+
+async def get_item_cost(item_id: UUID) -> Optional[Decimal]:
+    return await ItemRepo.get_cost(item_id)
