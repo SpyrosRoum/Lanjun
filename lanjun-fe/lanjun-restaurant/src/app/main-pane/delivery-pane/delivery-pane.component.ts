@@ -40,7 +40,7 @@ export class DeliveryPaneComponent implements OnInit {
           let ci = new CartItem(itemService.getItemById(id), c);
 
           this.cartItems.push(ci);
-          this.sum += ci.item.price;
+          this.sum += ci.item.price * c;
         }
       }
     });
