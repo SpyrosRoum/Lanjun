@@ -69,6 +69,7 @@ class OrderItemResponse(BaseModel):
 
 
 class OrderResponse(BaseModel):
+    order_id: UUID
     user_id: UUID
     items: list[OrderItemResponse]
     cost: Decimal
@@ -76,6 +77,7 @@ class OrderResponse(BaseModel):
     @classmethod
     def from_model(cls, model: OrderModel) -> "OrderResponse":
         return cls(
+            order_id=model.id,
             user_id=model.user_id,
             items=model.items,
             cost=model.cost,
