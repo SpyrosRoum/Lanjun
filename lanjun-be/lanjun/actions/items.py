@@ -14,7 +14,7 @@ async def get_items_per_category() -> CategoryItems:
             Category(name=category, items=list(map(ItemResponse.from_model, items)))
         )
 
-    return CategoryItems(categories=result_categories)
+    return CategoryItems(categories=sorted(result_categories, key=lambda c: c.name))
 
 
 async def create_item(item_info: CreateItem) -> ItemModel:
