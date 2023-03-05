@@ -41,5 +41,5 @@ async def get_all_orders() -> list[OrderResponse]:
     return list(map(OrderResponse.from_model, orders))
 
 
-def delete_order(order_id: UUID):
+async def delete_order(order_id: UUID):
     await OrderRepo.delete(order_id)
