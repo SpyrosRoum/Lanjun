@@ -16,7 +16,9 @@ from lanjun import entities  # noqa: F401
 from lanjun import database
 from lanjun.common import settings
 from lanjun.database import get_or_create_engine
+from lanjun.domain.enums import UserType
 from lanjun.domain.item import ItemModel
+from lanjun.domain.user import UserModel
 from lanjun.server.main import app
 
 
@@ -77,6 +79,34 @@ def get_item() -> Callable[[], ItemModel]:
             price=price,
             category=category,
             image_url=image_url,
+        )
+
+    return _wrapper
+
+
+@pytest.fixture(scope="function")
+def get_user() -> Callable[[], UserModel]:
+    def _wrapper(
+        id_: Optional[UUID] = None,
+        email: Optional[str] = None,
+        name: str = "User Name",
+        address: Optional[str] = None,
+        floor: Optional[str] = None,
+        bell: Optional[str] = None,
+        phone: Optional[str] = None,
+        password: str = "pass",
+        type: UserType = UserType.NORMAL,
+    ) -> UserModel:
+        return UserModel(
+            id=id_ or uuid4(),
+            email=email or f"{str(uuid4())}@email.com",
+            name=name,
+            address=address,
+            floor=floor,
+            bell=bell,
+            phone=phone or str(uuid4()),
+            password=password,
+            type=type,
         )
 
     return _wrapper

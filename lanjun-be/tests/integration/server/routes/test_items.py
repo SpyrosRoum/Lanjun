@@ -95,13 +95,15 @@ class TestItemEndpoints:
         assert resp.status_code == 404
         assert resp.json() == {"detail": "Item not found"}
 
-    async def test_delete_item(self,test_client: AsyncClient, admin_jwt_token: str, get_item):
+    async def test_delete_item(self, test_client: AsyncClient, admin_jwt_token: str, get_item):
         ids = [uuid4(), uuid4()]
         for id_ in ids:
             item = get_item(id_=id_, category=f"cat {str(id_)}")
             await ItemRepo.save(item)
 
-        res = await test_client.delete(f"/v1/items/{str(ids[1])}", headers={"Authorization": f"Bearer {admin_jwt_token}"})
+        res = await test_client.delete(
+            f"/v1/items/{str(ids[1])}", headers={"Authorization": f"Bearer {admin_jwt_token}"}
+        )
         assert res.status_code == 200
 
         item = await ItemRepo.get(ids[0])
