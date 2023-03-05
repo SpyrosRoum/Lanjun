@@ -16,6 +16,12 @@ async def get_items() -> CategoryItems:
     return items
 
 
+@router.get("/v1/items/{item_id}", response_model=ItemResponse)
+async def get_item(item_id: UUID) -> ItemResponse:
+    item = await item_actions.get_item(item_id)
+    return ItemResponse.from_model(item)
+
+
 @router.post("/v1/items", response_model=ItemResponse)
 async def create_item(
     item_info: CreateItem, user_id: str = Depends(get_admin_user_id)
