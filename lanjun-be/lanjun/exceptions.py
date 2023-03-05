@@ -6,7 +6,9 @@ class AppException(Exception):
 
 
 class NotFoundException(AppException):
-    pass
+    def __init__(self, message: Optional[str] = None) -> None:
+        message = message or "Could not find resource"
+        super().__init__(message)
 
 
 class AuthorizationException(AppException):

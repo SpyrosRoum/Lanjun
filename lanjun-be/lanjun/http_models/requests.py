@@ -1,5 +1,6 @@
 from decimal import Decimal
 from typing import Optional
+from uuid import UUID
 
 from email_validator import validate_email
 from pydantic import BaseModel, EmailStr, validator
@@ -36,3 +37,7 @@ class CreateItem(BaseModel):
     description: str
     category: str
     price: Decimal
+
+
+class UpdateItem(CreateItem):
+    id: UUID

@@ -2,12 +2,15 @@ import logging
 from typing import Optional
 from uuid import UUID
 
-from sqlalchemy import select
+from sqlalchemy import select, update
+from sqlalchemy.engine import Result
 from sqlalchemy.exc import IntegrityError
 
 from lanjun.database import db_session
 from lanjun.domain.item import ItemModel
 from lanjun.entities.item import Item
+from lanjun.exceptions import NotFoundException
+from lanjun.http_models.requests import UpdateItem
 
 logger = logging.getLogger(__name__)
 
@@ -53,3 +56,13 @@ class ItemRepo:
             entities: list[Item] = res.scalars().all()
 
             return list(map(ItemModel.from_entity, entities))
+
+    @classmethod
+    async def update_item(cls, item_info: UpdateItem):
+        query = update(Item).where(Item.id == item_info.id).values(item_info.dict())
+
+        async with db_session() as session:
+            res = await session.execute(query)
+            if res.rowcount == 0:
+                raise NotFoundException("Item not found")
+            await session.commit()
