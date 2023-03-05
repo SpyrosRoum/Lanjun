@@ -6,7 +6,12 @@ from pydantic import BaseModel
 
 from lanjun.domain.enums import UserType
 from lanjun.domain.item import ItemModel
+from lanjun.domain.order import OrderModel
 from lanjun.domain.user import UserModel
+
+
+class IdResponse(BaseModel):
+    id: UUID
 
 
 class ItemResponse(BaseModel):
@@ -56,3 +61,26 @@ class UserResponse(BaseModel):
     @classmethod
     def from_model(cls, user: UserModel) -> "UserResponse":
         return cls(**user.dict())
+
+
+class OrderItemResponse(BaseModel):
+    item_id: UUID
+    count: int
+
+
+class OrderResponse(BaseModel):
+    user_id: UUID
+    items: list[ItemResponse]
+    cost: Decimal
+
+    @classmethod
+    def from_model(cls, model: OrderModel) -> "OrderResponse":
+        return cls(
+            user_id=model.user_id,
+            items=model.items,
+            cost=model.cost,
+        )
+
+
+class Orders(BaseModel):
+    orders: list[OrderResponse]

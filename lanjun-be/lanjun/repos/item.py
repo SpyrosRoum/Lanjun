@@ -1,10 +1,10 @@
 import logging
 from datetime import datetime
+from decimal import Decimal
 from typing import Optional
 from uuid import UUID
 
-from sqlalchemy import delete, select, update
-from sqlalchemy.engine import Result
+from sqlalchemy import select, update
 from sqlalchemy.exc import IntegrityError
 
 from lanjun.database import db_session
@@ -59,7 +59,7 @@ class ItemRepo:
             return list(map(ItemModel.from_entity, entities))
 
     @classmethod
-    async def update_item(cls, item_info: UpdateItem):
+    async def update_item(cls, item_info: UpdateItem) -> None:
         query = update(Item).where(Item.id == item_info.id).values(item_info.dict())
 
         async with db_session() as session:
@@ -77,3 +77,10 @@ class ItemRepo:
             if res.rowcount == 0:
                 raise NotFoundException("Item not found")
             await session.commit()
+
+    @classmethod
+    async def get_cost(cls, item_id: UUID) -> Optional[Decimal]:
+        query = select(Item.price).where(Item.id == item_id).where(Item.deleted_at.is_(None))
+        async with db_session() as session:
+            res = await session.execute(query)
+            return res.scalar_one_or_none()

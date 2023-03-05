@@ -5,6 +5,7 @@ import bcrypt
 
 from lanjun.domain.enums import UserType
 from lanjun.domain.user import UserModel
+from lanjun.exceptions import NotFoundException
 from lanjun.http_models.requests import AuthUser, CreateUser
 from lanjun.repos.user import UserRepo
 
@@ -40,3 +41,11 @@ async def login_user(user_auth: AuthUser) -> Optional[UserModel]:
 
 async def get_user_by_id(user_id: UUID) -> Optional[UserModel]:
     return await UserRepo.get(user_id)
+
+
+async def is_admin(user_id: UUID) -> bool:
+    _is_admin = await UserRepo.is_admin(user_id)
+    if _is_admin is None:
+        raise NotFoundException
+
+    return _is_admin
