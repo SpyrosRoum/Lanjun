@@ -16,7 +16,7 @@ async def create_order(order_info: CreateOrder, user_id: UUID) -> UUID:
         item_cost = await item_actions.get_item_cost(item.item_id)
         if item_cost is None:
             raise NotFoundException("One or more items don't exist")
-        cost += item_cost
+        cost += item_cost * item.count
 
     order = OrderModel(
         id=uuid4(),

@@ -65,7 +65,7 @@ class OrderRepo:
 
     @classmethod
     async def get_orders_for_user(cls, user_id: UUID) -> list[OrderModel]:
-        query = select(Order.id).where(Order.user_id == user_id).where(Order.deleted_at.isnot(None))
+        query = select(Order.id).where(Order.user_id == user_id).where(Order.deleted_at.is_(None))
 
         async with db_session() as session:
             res = await session.execute(query)
@@ -80,7 +80,7 @@ class OrderRepo:
 
     @classmethod
     async def get_all_orders(cls) -> list[OrderModel]:
-        query = select(Order.id).where(Order.deleted_at.isnot(None))
+        query = select(Order.id).where(Order.deleted_at.is_(None))
 
         async with db_session() as session:
             res = await session.execute(query)
