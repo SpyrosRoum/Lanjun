@@ -190,7 +190,7 @@ export class ItemTableComponent implements OnInit {
 
   deleteItem(id: string, type: string) {
     this.api.deleteItem(id).subscribe((d) => {
-
+      this.itemService.setItems();
     });
 
     this.showBin(id, type);
@@ -242,5 +242,12 @@ export class ItemTableComponent implements OnInit {
     this.api.addItem(n, i, d, p, c).subscribe((t) => {
       this.itemService.setItems();
     });
+
+    nameE.value = "";
+    imageE.value = "";
+    descriptionE.value = "";
+    priceE.value = "";
+    categoryE.value = "";
+
   }
 }

@@ -112,11 +112,7 @@ export class ApiService {
     headers = headers.append('Content-Type', 'application/json');
     headers = headers.append('Authorization', `Bearer ${AuthService.token}`);
 
-    let httpParams = new HttpParams().set('id', id);
-
-    let options = { params: httpParams, headers: headers };
-
-    return this.http.delete("http://135.181.25.134:8080/v1/items", options).pipe(
+    return this.http.delete(`http://135.181.25.134:8080/v1/items/${id}/`, { headers }).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );

@@ -1,5 +1,6 @@
 div {
     margin-right: 5rem;
+    overflow-y: scroll;
 }
 
 h2 {
