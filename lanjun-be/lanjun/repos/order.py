@@ -1,13 +1,15 @@
 import logging
 from typing import Optional
 from uuid import UUID
+from datetime import datetime
 
-from sqlalchemy import select
+from sqlalchemy import select, update
 
 from lanjun.database import db_session
 from lanjun.domain.order import OrderModel
 from lanjun.entities.links import OrderItemLink
 from lanjun.entities.order import Order
+from lanjun.exceptions import NotFoundException
 
 logger = logging.getLogger(__name__)
 
@@ -63,7 +65,7 @@ class OrderRepo:
 
     @classmethod
     async def get_orders_for_user(cls, user_id: UUID) -> list[OrderModel]:
-        query = select(Order.id).where(Order.user_id == user_id)
+        query = select(Order.id).where(Order.user_id == user_id).where(Order.deleted_at.isnot(None))
 
         async with db_session() as session:
             res = await session.execute(query)
@@ -78,7 +80,7 @@ class OrderRepo:
 
     @classmethod
     async def get_all_orders(cls) -> list[OrderModel]:
-        query = select(Order.id)
+        query = select(Order.id).where(Order.deleted_at.isnot(None))
 
         async with db_session() as session:
             res = await session.execute(query)
@@ -90,3 +92,13 @@ class OrderRepo:
             orders.append(order)
 
         return orders
+
+    @classmethod
+    def delete(cls, order_id: UUID):
+        query = update(Order).where(Order.id == order_id).values(deleted_at=datetime.utcnow())
+        async with db_session() as session:
+            res = await session.execute(query)
+            if res.rowcount == 0:
+                raise NotFoundException("Order not found")
+
+            await session.commit()

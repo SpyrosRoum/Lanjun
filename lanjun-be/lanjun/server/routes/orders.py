@@ -6,7 +6,7 @@ from lanjun.actions import orders as order_actions
 from lanjun.actions import users as user_actions
 from lanjun.http_models.requests import CreateOrder
 from lanjun.http_models.responses import IdResponse, Orders
-from lanjun.server.jwt_auth import get_user_id
+from lanjun.server.jwt_auth import get_user_id, get_admin_user_id
 
 router = APIRouter()
 
@@ -25,3 +25,8 @@ async def get_orders(user_id: str = Depends(get_user_id)) -> Orders:
         orders = await order_actions.get_orders_for_user(UUID(user_id))
 
     return Orders(orders=orders)
+
+
+@router.delete("/v1/orders/{order_id}")
+async def delete_orders(order_id: UUID, user_id: str = Depends(get_admin_user_id)) -> None:
+    await order_actions.delete_order(order_id)

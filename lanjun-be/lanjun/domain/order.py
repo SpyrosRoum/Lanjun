@@ -1,6 +1,6 @@
 from datetime import datetime
 from decimal import Decimal
-from typing import Tuple
+from typing import Tuple, Optional
 from uuid import UUID
 
 from pydantic import BaseModel
@@ -18,6 +18,7 @@ class OrderModel(BaseModel):
     user_id: UUID
     cost: Decimal
     created_at: datetime
+    deleted_at: Optional[datetime]
 
     items: list[OrderItem]
 

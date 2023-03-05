@@ -39,3 +39,7 @@ async def get_orders_for_user(user_id: UUID) -> list[OrderResponse]:
 async def get_all_orders() -> list[OrderResponse]:
     orders = await OrderRepo.get_all_orders()
     return list(map(OrderResponse.from_model, orders))
+
+
+def delete_order(order_id: UUID):
+    await OrderRepo.delete(order_id)
