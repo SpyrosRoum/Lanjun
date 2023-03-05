@@ -36,3 +36,7 @@ async def login_user(user_auth: AuthUser) -> Optional[UserModel]:
         return None
 
     return user
+
+
+async def get_user_by_id(user_id: UUID) -> Optional[UserModel]:
+    return await UserRepo.get(user_id)
