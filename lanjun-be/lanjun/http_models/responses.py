@@ -1,9 +1,12 @@
 from decimal import Decimal
+from typing import Optional
 from uuid import UUID
 
 from pydantic import BaseModel
 
+from lanjun.domain.enums import UserType
 from lanjun.domain.item import ItemModel
+from lanjun.domain.user import UserModel
 
 
 class ItemResponse(BaseModel):
@@ -39,3 +42,17 @@ class UserCreated(BaseModel):
 
 class LoginToken(BaseModel):
     token: str
+
+
+class UserResponse(BaseModel):
+    email: str
+    name: str
+    address: Optional[str]
+    floor: Optional[str]
+    bell: Optional[str]
+    phone: str
+    type: UserType
+
+    @classmethod
+    def from_model(cls, user: UserModel) -> "UserResponse":
+        return cls(**user.dict())
