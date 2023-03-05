@@ -6,6 +6,7 @@ from lanjun.actions import items as item_actions
 from lanjun.domain.order import OrderModel
 from lanjun.exceptions import NotFoundException
 from lanjun.http_models.requests import CreateOrder
+from lanjun.http_models.responses import OrderResponse
 from lanjun.repos.order import OrderRepo
 
 
@@ -28,3 +29,13 @@ async def create_order(order_info: CreateOrder, user_id: UUID) -> UUID:
     await OrderRepo.save(order)
 
     return order.id
+
+
+async def get_orders_for_user(user_id: UUID) -> list[OrderResponse]:
+    orders = await OrderRepo.get_orders_for_user(user_id)
+    return list(map(OrderResponse.from_model, orders))
+
+
+async def get_all_orders() -> list[OrderResponse]:
+    orders = await OrderRepo.get_all_orders()
+    return list(map(OrderResponse.from_model, orders))

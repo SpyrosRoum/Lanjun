@@ -44,7 +44,7 @@ class OrderRepo:
             if entity is None:
                 return None
 
-            query = select(OrderItemLink.item_id).where(OrderItemLink.order_id==order_id)
+            query = select(OrderItemLink.item_id).where(OrderItemLink.order_id == order_id)
             res = await session.execute(query)
             item_ids = res.scalars().all()
 
@@ -60,3 +60,33 @@ class OrderRepo:
                 order_items.append((item_id, count))
 
             return OrderModel.from_entity(entity, order_items)
+
+    @classmethod
+    async def get_orders_for_user(cls, user_id: UUID) -> list[OrderModel]:
+        query = select(Order.id).where(Order.user_id == user_id)
+
+        async with db_session() as session:
+            res = await session.execute(query)
+            order_ids = res.scalars().all()
+
+        orders = []
+        for order_id in order_ids:
+            order = await cls.get(order_id)
+            orders.append(order)
+
+        return orders
+
+    @classmethod
+    async def get_all_orders(cls) -> list[OrderModel]:
+        query = select(Order.id)
+
+        async with db_session() as session:
+            res = await session.execute(query)
+            order_ids = res.scalars().all()
+
+        orders = []
+        for order_id in order_ids:
+            order = await cls.get(order_id)
+            orders.append(order)
+
+        return orders

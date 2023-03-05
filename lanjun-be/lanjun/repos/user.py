@@ -75,3 +75,13 @@ class UserRepo:
                 return None
 
             return UserModel.from_entity(entity)
+
+    @classmethod
+    async def is_admin(cls, user_id: UUID) -> Optional[bool]:
+        query = select(User.type).where(User.id == user_id)
+        async with db_session() as session:
+            res = await session.execute(query)
+            user_type: Optional[UserType] = res.scalar_one_or_none()
+            if user_type is None:
+                return None
+            return user_type == UserType.ADMIN
