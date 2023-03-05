@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from fastapi import APIRouter, Depends
 
 from lanjun.actions import items as item_actions
@@ -25,3 +27,8 @@ async def create_item(
 @router.put("/v1/items")
 async def update_item(item_info: UpdateItem, user_id: str = Depends(get_admin_user_id)) -> None:
     await item_actions.update_item(item_info)
+
+
+@router.delete("/v1/items/{item_id}")
+async def delete_item(item_id: UUID, user_id: str = Depends(get_admin_user_id)) -> None:
+    await item_actions.delete_item(item_id)

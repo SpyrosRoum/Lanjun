@@ -1,8 +1,9 @@
 import logging
+from datetime import datetime
 from typing import Optional
 from uuid import UUID
 
-from sqlalchemy import select, update
+from sqlalchemy import delete, select, update
 from sqlalchemy.engine import Result
 from sqlalchemy.exc import IntegrityError
 
@@ -40,7 +41,7 @@ class ItemRepo:
 
     @classmethod
     async def get_categories(cls) -> list[str]:
-        query = select(Item.category).distinct()
+        query = select(Item.category).distinct().where(Item.deleted_at.is_(None))
         async with db_session() as session:
             res = await session.execute(query)
             categories: list[str] = res.scalars().all()
@@ -49,7 +50,7 @@ class ItemRepo:
 
     @classmethod
     async def get_items_in_category(cls, category: str) -> list[ItemModel]:
-        query = select(Item).where(Item.category == category)
+        query = select(Item).where(Item.category == category).where(Item.deleted_at.is_(None))
 
         async with db_session() as session:
             res = await session.execute(query)
@@ -60,6 +61,16 @@ class ItemRepo:
     @classmethod
     async def update_item(cls, item_info: UpdateItem):
         query = update(Item).where(Item.id == item_info.id).values(item_info.dict())
+
+        async with db_session() as session:
+            res = await session.execute(query)
+            if res.rowcount == 0:
+                raise NotFoundException("Item not found")
+            await session.commit()
+
+    @classmethod
+    async def delete(cls, item_id: UUID) -> None:
+        query = update(Item).where(Item.id == item_id).values(deleted_at=datetime.utcnow())
 
         async with db_session() as session:
             res = await session.execute(query)

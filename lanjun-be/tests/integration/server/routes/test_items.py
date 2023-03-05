@@ -1,4 +1,5 @@
 from decimal import Decimal
+from uuid import uuid4
 
 from httpx import AsyncClient
 
@@ -93,3 +94,26 @@ class TestItemEndpoints:
 
         assert resp.status_code == 404
         assert resp.json() == {"detail": "Item not found"}
+
+    async def test_delete_item(self,test_client: AsyncClient, admin_jwt_token: str, get_item):
+        ids = [uuid4(), uuid4()]
+        for id_ in ids:
+            item = get_item(id_=id_, category=f"cat {str(id_)}")
+            await ItemRepo.save(item)
+
+        res = await test_client.delete(f"/v1/items/{str(ids[1])}", headers={"Authorization": f"Bearer {admin_jwt_token}"})
+        assert res.status_code == 200
+
+        item = await ItemRepo.get(ids[0])
+        assert item is not None
+        assert item.deleted_at is None
+
+        item = await ItemRepo.get(ids[1])
+        assert item is not None
+        assert item.deleted_at is not None
+
+        items = await ItemRepo.get_items_in_category(f"cat {ids[0]}")
+        assert len(items) == 1
+
+        items = await ItemRepo.get_items_in_category(f"cat {ids[1]}")
+        assert len(items) == 0
