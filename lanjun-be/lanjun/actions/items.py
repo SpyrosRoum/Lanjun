@@ -3,6 +3,7 @@ from typing import Optional
 from uuid import UUID
 
 from lanjun.domain.item import ItemModel
+from lanjun.exceptions import NotFoundException
 from lanjun.http_models.requests import CreateItem, UpdateItem
 from lanjun.http_models.responses import Category, CategoryItems, ItemResponse
 from lanjun.repos.item import ItemRepo
@@ -37,3 +38,12 @@ async def delete_item(item_id: UUID) -> None:
 
 async def get_item_cost(item_id: UUID) -> Optional[Decimal]:
     return await ItemRepo.get_cost(item_id)
+
+
+async def get_item(item_id) -> ItemModel:
+    item = await ItemRepo.get(item_id)
+
+    if item is None:
+        raise NotFoundException("Item not found")
+
+    return item

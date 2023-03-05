@@ -6,7 +6,7 @@ from lanjun.actions import orders as order_actions
 from lanjun.actions import users as user_actions
 from lanjun.http_models.requests import CreateOrder
 from lanjun.http_models.responses import IdResponse, Orders
-from lanjun.server.jwt_auth import get_user_id, get_admin_user_id
+from lanjun.server.jwt_auth import get_admin_user_id, get_user_id
 
 router = APIRouter()
 

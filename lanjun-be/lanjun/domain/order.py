@@ -1,6 +1,6 @@
 from datetime import datetime
 from decimal import Decimal
-from typing import Tuple, Optional
+from typing import Optional, Tuple
 from uuid import UUID
 
 from pydantic import BaseModel
