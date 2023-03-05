@@ -70,7 +70,7 @@ class OrderItemResponse(BaseModel):
 
 class OrderResponse(BaseModel):
     user_id: UUID
-    items: list[ItemResponse]
+    items: list[OrderItemResponse]
     cost: Decimal
 
     @classmethod
