@@ -7,7 +7,7 @@ import { User } from './user.model';
   providedIn: 'root',
 })
 export class AuthService {
-  static user: User;
+  static user: User = new User();
   static loggedin: boolean;
   static token: string;
   static loggedinSubject: Subject<boolean> = new Subject();
@@ -18,12 +18,8 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    //returns token
     this.api.login(email, password).subscribe((t) => {
-      AuthService.token = t.token;
-      window.localStorage.setItem("token", t);
-      AuthService.loggedin = true;
-      AuthService.loggedinSubject.next(AuthService.loggedin);
+      this.loginData(t);
     })
   }
 
@@ -31,15 +27,30 @@ export class AuthService {
     let s: string | null = window.localStorage.getItem("token");
     if (typeof s === 'string') {
       this.api.loginWithToken(s).subscribe((t) => {
-        AuthService.loggedin = true;
-        AuthService.loggedinSubject.next(AuthService.loggedin);
+        this.loginData(t);
       })
     }
   }
 
+  private loginData(t: any) {
+    AuthService.token = t.token;
+    window.localStorage.setItem("token", t);
+    AuthService.loggedin = true;
+    AuthService.loggedinSubject.next(AuthService.loggedin);
+    this.api.me().subscribe((u) => {
+      AuthService.user.email = u.email;
+      AuthService.user.name = u.name;
+      AuthService.user.address = u.address;
+      AuthService.user.floor = u.floor;
+      AuthService.user.bell = u.bell;
+      AuthService.user.phone = u.phone;
+      AuthService.user.admin = u.type === 'admin';
+    });
+  }
+
   signup(email: any, name: any, password: any, phone: any, address: any, floor: any, bell: any) {
     this.api.signup(email, name, password, phone, address, floor, bell).subscribe((c) => {
-      console.log(c);
+      this.api.login(email, password)
     });
   }
 

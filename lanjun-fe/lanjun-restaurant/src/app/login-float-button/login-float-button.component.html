@@ -45,15 +45,15 @@
 
 <div *ngIf="logged&&toggle" id="login-pop-up" class="login-pop-up">
     <div class="user">
-        <div class="user-name">Username</div>
-        <div class="user-email">email</div>
-        <div class="user-phone">Phone</div>
+        <div class="user-name">{{user.name}}</div>
+        <div class="user-email">{{user.email}}</div>
+        <div class="user-phone">{{user.phone}}</div>
 
         <div class="user-address-details">
-            <div class="user-address-and-floor">Address, Floor</div>
-            <div class="user-bell">Bell: bell</div>
+            <div class="user-address-and-floor">{{user.address}}, {{user.floor}}</div>
+            <div class="user-bell">Bell: <span class="italics">{{user.bell}}</span></div>
         </div>
 
-        <div class="user-admin button-complete" (click)="swapper()">Admin Page</div>
+        <div *ngIf="user.admin" class="user-admin button-complete" (click)="swapper()">Admin Page</div>
     </div>
 </div>

@@ -1,7 +1,7 @@
 .menu-pane {
     --img-width: 7rem;
     --bg-color: rgba(245, 222, 179, 1);
-    
+
     display: grid;
     width: calc(100% - 18rem);
     justify-content: center;
@@ -16,6 +16,8 @@
     display: grid;
     gap: 1rem;
     opacity: 0.6;
+    align-items: baseline;
+    align-content: baseline;
 }
 
 .category:hover {

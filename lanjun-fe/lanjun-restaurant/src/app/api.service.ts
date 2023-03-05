@@ -83,21 +83,23 @@ export class ApiService {
     );
   }
 
-  public addItem(n: string | undefined, i: string | undefined, d: string | undefined, p: number | undefined, c: string | undefined): Observable<any> {
-
-    console.log(AuthService.token);
-
+  public me() {
     let headers: HttpHeaders = this.headers;
     headers = headers.append('Content-Type', 'application/json');
     headers = headers.append('Authorization', `Bearer ${AuthService.token}`);
 
-    // const headers = new HttpHeaders({
-    //   'Content-Type': 'application/json',
-    //   'Authorization': `Bearer ${AuthService.token.toString()}`
-    // })
+    return this.http.get("http://135.181.25.134:8080/v1/users/me", { headers }).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
+
+  public addItem(n: string | undefined, i: string | undefined, d: string | undefined, p: number | undefined, c: string | undefined): Observable<any> {
+    let headers: HttpHeaders = this.headers;
+    headers = headers.append('Content-Type', 'application/json');
+    headers = headers.append('Authorization', `Bearer ${AuthService.token}`);
 
     const json = JSON.stringify({ name: n, image_url: i, description: d, category: c, price: p });
-    console.log(json);
 
     return this.http.post("http://135.181.25.134:8080/v1/items", json, { headers }).pipe(
       map(this.extractData),
@@ -108,13 +110,26 @@ export class ApiService {
   public deleteItem(id: string): Observable<any> {
     let headers: HttpHeaders = this.headers;
     headers = headers.append('Content-Type', 'application/json');
-    headers = headers.append('Authorization', AuthService.token);
+    headers = headers.append('Authorization', `Bearer ${AuthService.token}`);
 
     let httpParams = new HttpParams().set('id', id);
 
     let options = { params: httpParams, headers: headers };
 
     return this.http.delete("http://135.181.25.134:8080/v1/items", options).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
+
+  public updateItem(id: string, n: string, i: string, d: string, p: number, c: string): Observable<any> {
+    let headers: HttpHeaders = this.headers;
+    headers = headers.append('Content-Type', 'application/json');
+    headers = headers.append('Authorization', `Bearer ${AuthService.token}`);
+
+    const json = JSON.stringify({ id: id, name: n, image_url: i, description: d, category: c, price: p });
+
+    return this.http.put("http://135.181.25.134:8080/v1/items", json, { headers }).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );

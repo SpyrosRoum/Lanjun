@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/api.service';
 import { Item } from 'src/app/item.model';
+import { ItemService } from 'src/app/item.service';
 
 @Component({
   selector: 'app-item-table',
@@ -8,21 +10,26 @@ import { Item } from 'src/app/item.model';
   styleUrls: ['./item-table.component.css']
 })
 export class ItemTableComponent implements OnInit {
-  @Input() items: Item[];
+  public items: Item[];
   private name: string;
   private img: string;
   private description: string;
   private price: number;
   private category: string;
 
+  private itemSubscription: Subscription;
 
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, private itemService: ItemService) {
     this.items = new Array();
     this.name = "";
     this.img = "";
     this.description = "";
     this.price = 0;
     this.category = "";
+
+    this.itemSubscription = ItemService.itemSubject.subscribe(c => {
+      this.items = c;
+    })
   }
 
   reset() {
@@ -49,32 +56,31 @@ export class ItemTableComponent implements OnInit {
 
     for (let i = 0; i < els.length; i++) {
       let cleanElId: string = els[i].id.substring(els[i].id.indexOf("_") + 1);
+      if (cleanElId != type + id) continue;
 
-      if (cleanElId === type + id) {
-        els[i].disabled = false;
-        if (els[i].name === 'hide') {
-          els[i].hidden = false;
-        }
-        console.log(els[i].id.substring(0, els[i].id.indexOf("_")));
-
-        switch (els[i].id.substring(0, els[i].id.indexOf("_"))) {
-          case "name":
-            this.name = els[i].value;
-            break;
-          case "img":
-            this.img = els[i].value;
-            break;
-          case "description":
-            this.description = els[i].value;
-            break;
-          case "price":
-            this.price = +els[i].value;
-            break;
-          case "category":
-            this.category = els[i].value;
-            break;
-        }
+      els[i].disabled = false;
+      if (els[i].name === 'hide') {
+        els[i].hidden = false;
       }
+
+      switch (els[i].id.substring(0, els[i].id.indexOf("_"))) {
+        case "name":
+          this.name = els[i].value;
+          break;
+        case "img":
+          this.img = els[i].value;
+          break;
+        case "description":
+          this.description = els[i].value;
+          break;
+        case "price":
+          this.price = +els[i].value;
+          break;
+        case "category":
+          this.category = els[i].value;
+          break;
+      }
+
     }
     //hide image
     let img = document.getElementById("img_" + type + id);
@@ -92,41 +98,46 @@ export class ItemTableComponent implements OnInit {
     if (save) {
       save.hidden = false;
     }
-
   }
 
   save(id: string, type: string) {
     //enable inputs
     let els: HTMLCollectionOf<HTMLInputElement> = document.getElementsByTagName("input");
 
+    let changes: boolean = false;
+
     for (let i = 0; i < els.length; i++) {
       let cleanElId: string = els[i].id.substring(els[i].id.indexOf("_") + 1);
+      if (cleanElId != type + id) continue
 
-      if (cleanElId === type + id) {
-        els[i].disabled = true;
-        if (els[i].name === 'hide') {
-          els[i].hidden = true;
-        }
+      els[i].disabled = true;
+      if (els[i].name === 'hide') {
+        els[i].hidden = true;
       }
 
       switch (els[i].id.substring(0, els[i].id.indexOf("_"))) {
         case "name":
+          changes = changes || this.name != els[i].value;
           if (this.name != els[i].value)
             this.name = els[i].value;
           break;
         case "img":
+          changes = changes || this.img != els[i].value;
           if (this.img != els[i].value)
             this.img = els[i].value;
           break;
         case "description":
+          changes = changes || this.description != els[i].value;
           if (this.description != els[i].value)
             this.description = els[i].value;
           break;
         case "price":
+          changes = changes || this.price != +els[i].value;
           if (this.price != +els[i].value)
             this.price = +els[i].value;
           break;
         case "category":
+          changes = changes || this.category != els[i].value;
           if (this.category != els[i].value)
             this.category = els[i].value;
           break;
@@ -149,7 +160,12 @@ export class ItemTableComponent implements OnInit {
       save.hidden = true;
     }
 
-    //TODO: Call to update item
+    if (changes) {
+      console.log("changes");
+      this.api.updateItem(id, this.name, this.img, this.description, this.price, this.category).subscribe(u => {
+        this.itemService.setItems();
+      });
+    }
     //reset the values to empty
     this.reset();
   }
@@ -174,7 +190,7 @@ export class ItemTableComponent implements OnInit {
 
   deleteItem(id: string, type: string) {
     this.api.deleteItem(id).subscribe((d) => {
-      console.log(d);
+
     });
 
     this.showBin(id, type);
@@ -224,10 +240,7 @@ export class ItemTableComponent implements OnInit {
     }
 
     this.api.addItem(n, i, d, p, c).subscribe((t) => {
-
+      this.itemService.setItems();
     });
-
-    console.log(n + " " + i + " " + d + " " + p + " " + c);
-
   }
 }

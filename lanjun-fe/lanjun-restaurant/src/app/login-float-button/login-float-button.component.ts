@@ -3,6 +3,7 @@ import { FormBuilder, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { SwapperService } from '../swapper.service';
+import { User } from '../user.model';
 
 
 @Component({
@@ -16,14 +17,16 @@ export class LoginFloatButtonComponent implements OnInit {
   public toggle: boolean;
   public loginTab: boolean;
   private subscription: Subscription;
+  public user: User;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private swapperService: SwapperService) {
     this.logged = false;
     this.toggle = false;
     this.loginTab = true;
-    
+    this.user = new User();
     this.subscription = AuthService.loggedinSubject.subscribe(l => {
       this.logged = l;
+      this.user = AuthService.user;
     })
   }
 

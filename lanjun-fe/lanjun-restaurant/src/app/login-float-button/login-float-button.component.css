@@ -75,7 +75,7 @@
     display: flex;
     width: 100%;
     justify-content: space-around;
-    align-items: end;
+    align-items: flex-end;
 }
 
 .tab-buttons>div {
@@ -176,5 +176,8 @@
 
 .user-admin {
     margin-top: 1rem;
-    ;
+}
+
+.italics {
+    font-style: italic;
 }
