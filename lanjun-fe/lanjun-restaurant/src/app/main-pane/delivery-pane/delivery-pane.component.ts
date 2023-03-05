@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/auth.service';
 import { CartItem } from 'src/app/cart-item.model';
 import { CartService } from 'src/app/cart.service';
 import { ItemService } from 'src/app/item.service';
+import { OrderService } from 'src/app/order.service';
 import { Reservation } from 'src/app/reservation.model';
 import { SwapperService } from 'src/app/swapper.service';
 
@@ -21,7 +22,7 @@ export class DeliveryPaneComponent implements OnInit {
 
   constructor(private cartService: CartService, private itemService: ItemService,
     private swapperService: SwapperService,
-    private api: ApiService) {
+    private api: ApiService, private orderService: OrderService) {
     this.cartItems = cartService.getCartItems();
     this.sum = cartService.getPriceSum();
     this.reservation = false;
@@ -45,12 +46,8 @@ export class DeliveryPaneComponent implements OnInit {
     });
 
     this.logged = AuthService.loggedin;
-    console.log(AuthService.loggedin);
-    console.log(AuthService.token);
 
     AuthService.loggedinSubject.subscribe(l => {
-      console.log("Delivery " + l);
-
       this.logged = l;
     });
   }
@@ -62,8 +59,11 @@ export class DeliveryPaneComponent implements OnInit {
   }
 
   buy() {
-    //TODO: Add posibility of payment with cash
-    this.api.order(AuthService.token, this.sum, true, this.cartItems, this.reservationR);
+    this.api.postOrder(AuthService.token, this.sum, true, this.cartItems, this.reservationR).subscribe(o => {
+      this.orderService.setOrders();
+      this.cartService.clearCart();
+      this.swapper('home');
+    });
   }
 
   reserve(res: Reservation) {

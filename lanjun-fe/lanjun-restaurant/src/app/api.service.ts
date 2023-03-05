@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
+import { CartItemSimple } from './cart-item-simple.model';
 import { CartItem } from './cart-item.model';
 import { Reservation } from './reservation.model';
 
@@ -31,14 +32,6 @@ export class ApiService {
   private extractData(res: any) {
     let body = res;
     return body || {};
-  }
-
-  public getItems(): Observable<any> {
-    let headers: HttpHeaders = this.headers;
-    return this.http.get("http://135.181.25.134:8080/v1/items", { headers }).pipe(
-      map(this.extractData),
-      catchError(this.handleError)
-    );
   }
 
   public getHealth(): Observable<any> {
@@ -87,8 +80,17 @@ export class ApiService {
     let headers: HttpHeaders = this.headers;
     headers = headers.append('Content-Type', 'application/json');
     headers = headers.append('Authorization', `Bearer ${AuthService.token}`);
+    console.log(AuthService.token);
 
     return this.http.get("http://135.181.25.134:8080/v1/users/me", { headers }).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
+
+  public getItems(): Observable<any> {
+    let headers: HttpHeaders = this.headers;
+    return this.http.get("http://135.181.25.134:8080/v1/items", { headers }).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );
@@ -131,8 +133,40 @@ export class ApiService {
     );
   }
 
-  public order(token: string, sum: number, prepaid: boolean, cartItems: CartItem[], reservationR: Reservation): Observable<any> {
-    return this.http.post('http://135.181.25.134:8080/v1/order', { token, sum, prepaid, cartItems, reservationR }).pipe(
+  public getOrders(): Observable<any> {
+    let headers: HttpHeaders = this.headers;
+    headers = headers.append('Content-Type', 'application/json');
+    headers = headers.append('Authorization', `Bearer ${AuthService.token}`);
+
+    return this.http.get('http://135.181.25.134:8080/v1/orders', { headers }).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
+
+  public postOrder(token: string, sum: number, prepaid: boolean, cartItems: CartItem[], reservationR: Reservation): Observable<any> {
+    let cis: CartItemSimple[] = new Array();
+    cartItems.forEach(ci => {
+      let _cis: CartItemSimple = new CartItemSimple(ci.item.id, ci.count);
+      cis.push(_cis);
+    })
+
+    let headers: HttpHeaders = this.headers;
+    headers = headers.append('Content-Type', 'application/json');
+    headers = headers.append('Authorization', `Bearer ${AuthService.token}`);
+
+    return this.http.post('http://135.181.25.134:8080/v1/orders', { items: cis }, { headers }).pipe(
+      map(this.extractData),
+      catchError(this.handleError)
+    );
+  }
+
+  public deleteOrder(id: string) {
+    let headers: HttpHeaders = this.headers;
+    headers = headers.append('Content-Type', 'application/json');
+    headers = headers.append('Authorization', `Bearer ${AuthService.token}`);
+
+    return this.http.delete(`http://135.181.25.134:8080/v1/orders/${id}/`, { headers }).pipe(
       map(this.extractData),
       catchError(this.handleError)
     );

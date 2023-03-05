@@ -61,14 +61,20 @@ export class CartService {
         }
     }
 
-    getCountByItemId(id: string) {        
-        let a = this.getCartItems().filter(i => i.item.id === id); 
-        
+    getCountByItemId(id: string) {
+        let a = this.getCartItems().filter(i => i.item.id === id);
+
         if (a.length === 0) {
             return 0;
         } else {
             return a[0].count;
         }
 
+    }
+
+
+    clearCart() { 
+        this.cartItemMap = new Map<string, number>;
+        this.cartItemCount = 0;
     }
 } 

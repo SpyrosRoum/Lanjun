@@ -5,8 +5,8 @@
             [delivery]="true"></app-item>
         <div class="summary">
             <div class="total-price">The total is: <span class="price">{{sum}}</span></div>
-            <!-- <div class="total-items">No. of Items: <span class="items">{{cartItems.length}}</span></div> -->
-            <div class="choose-reservation">
+            
+            <!-- <div class="choose-reservation">
                 <div class="choose-reservation-switch-block">
                     <span class="choose-reservation-text">Reservation:</span>
                     <label class="choose-reservation-switch">
@@ -18,7 +18,7 @@
                 <div *ngIf="!reservation" class="choose-reservation-text">No, I'd just like a delivery</div>
             </div>
 
-            <app-reservation-pane *ngIf="reservation" (reservation)="reserve($event)"></app-reservation-pane>
+            <app-reservation-pane *ngIf="reservation" (reservation)="reserve($event)"></app-reservation-pane> -->
             <div *ngIf="logged" class="button-complete" (click)="buy()">Complete your order</div>
             <div *ngIf="!logged" class="button-complete" (click)="toggleLoginFloatButton()">Login to complete your order!</div>
         </div>

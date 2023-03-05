@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ApiService } from 'src/app/api.service';
+import { ItemService } from 'src/app/item.service';
 import { Order } from 'src/app/order.model';
+import { OrderService } from 'src/app/order.service';
 
 @Component({
   selector: 'app-order-table',
@@ -8,9 +11,15 @@ import { Order } from 'src/app/order.model';
   styleUrls: ['./order-table.component.css']
 })
 export class OrderTableComponent implements OnInit {
-  @Input() orders: Order[];
-  constructor(private api: ApiService) {
+  public orders: Order[];
+
+  private orderSubscription: Subscription;
+
+  constructor(private api: ApiService, private orderService: OrderService) {
     this.orders = new Array();
+    this.orderSubscription = OrderService.orderSubject.subscribe(o => {
+      this.orders = o;
+    });
   }
 
   ngOnInit(): void {
@@ -35,8 +44,8 @@ export class OrderTableComponent implements OnInit {
   }
 
   deleteOrder(id: string, type: string) {
-    this.api.deleteItem(id).subscribe((d) => {
-      console.log(d);
+    this.api.deleteOrder(id).subscribe((d) => {
+      this.orderService.setOrders();
     });
 
     this.showBin(id, type);
