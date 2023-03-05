@@ -9,7 +9,6 @@ from lanjun.domain.enums import UserType
 
 if TYPE_CHECKING:
     from lanjun.entities.order import Order
-    from lanjun.entities.reservation import Reservation
 
 
 class User(SQLModel, table=True):
@@ -26,4 +25,3 @@ class User(SQLModel, table=True):
     type: UserType = Field(sa_column=Column(EnumField(UserType)))
 
     orders: list["Order"] = Relationship(back_populates="user")
-    reservations: list["Reservation"] = Relationship(back_populates="user")
