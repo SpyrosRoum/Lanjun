@@ -8,7 +8,7 @@ from starlette.requests import Request
 from lanjun.common.logging import setup_logger
 from lanjun.exceptions import AppException, AuthorizationException, NotFoundException, UserExists
 from lanjun.server.middlewares.log import RequestLogMiddleware
-from lanjun.server.routes import auth, health, items
+from lanjun.server.routes import auth, health, items, users
 
 setup_logger()
 
@@ -27,6 +27,7 @@ app.add_middleware(RequestLogMiddleware)
 app.include_router(health.router)
 app.include_router(items.router)
 app.include_router(auth.router)
+app.include_router(users.router)
 
 
 @app.exception_handler(AppException)

@@ -10,27 +10,6 @@ from lanjun.repos.item import ItemRepo
 
 
 class TestItemRepo:
-    @pytest.fixture(scope="function")
-    def get_item(self) -> Callable[[], ItemModel]:
-        def _wrapper(
-            id_: Optional[UUID] = None,
-            name: Optional[str] = None,
-            description: str = "item description",
-            price: Decimal = Decimal("3.14"),
-            category: str = "category A",
-            image_url: str = "https://example.com",
-        ) -> ItemModel:
-            return ItemModel(
-                id=id_ or uuid4(),
-                name=name or str(uuid4()),  # Name must be unique
-                description=description,
-                price=price,
-                category=category,
-                image_url=image_url,
-            )
-
-        return _wrapper
-
     async def test_save_get(self, get_item):
         ids = [uuid4(), uuid4()]
         for id_ in ids:

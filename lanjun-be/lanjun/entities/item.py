@@ -1,5 +1,6 @@
+from datetime import datetime
 from decimal import Decimal
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 from uuid import UUID, uuid4
 
 from sqlmodel import Field, Relationship, SQLModel
@@ -19,5 +20,6 @@ class Item(SQLModel, table=True):
     price: Decimal
     category: str
     image_url: str
+    deleted_at: Optional[datetime] = Field(default=None, index=True, nullable=True)
 
     orders: list["Order"] = Relationship(back_populates="items", link_model=OrderItemLink)

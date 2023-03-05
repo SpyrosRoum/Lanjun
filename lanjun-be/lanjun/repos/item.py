@@ -1,13 +1,17 @@
 import logging
+from datetime import datetime
 from typing import Optional
 from uuid import UUID
 
-from sqlalchemy import select
+from sqlalchemy import delete, select, update
+from sqlalchemy.engine import Result
 from sqlalchemy.exc import IntegrityError
 
 from lanjun.database import db_session
 from lanjun.domain.item import ItemModel
 from lanjun.entities.item import Item
+from lanjun.exceptions import NotFoundException
+from lanjun.http_models.requests import UpdateItem
 
 logger = logging.getLogger(__name__)
 
@@ -37,7 +41,7 @@ class ItemRepo:
 
     @classmethod
     async def get_categories(cls) -> list[str]:
-        query = select(Item.category).distinct()
+        query = select(Item.category).distinct().where(Item.deleted_at.is_(None))
         async with db_session() as session:
             res = await session.execute(query)
             categories: list[str] = res.scalars().all()
@@ -46,10 +50,30 @@ class ItemRepo:
 
     @classmethod
     async def get_items_in_category(cls, category: str) -> list[ItemModel]:
-        query = select(Item).where(Item.category == category)
+        query = select(Item).where(Item.category == category).where(Item.deleted_at.is_(None))
 
         async with db_session() as session:
             res = await session.execute(query)
             entities: list[Item] = res.scalars().all()
 
             return list(map(ItemModel.from_entity, entities))
+
+    @classmethod
+    async def update_item(cls, item_info: UpdateItem):
+        query = update(Item).where(Item.id == item_info.id).values(item_info.dict())
+
+        async with db_session() as session:
+            res = await session.execute(query)
+            if res.rowcount == 0:
+                raise NotFoundException("Item not found")
+            await session.commit()
+
+    @classmethod
+    async def delete(cls, item_id: UUID) -> None:
+        query = update(Item).where(Item.id == item_id).values(deleted_at=datetime.utcnow())
+
+        async with db_session() as session:
+            res = await session.execute(query)
+            if res.rowcount == 0:
+                raise NotFoundException("Item not found")
+            await session.commit()
